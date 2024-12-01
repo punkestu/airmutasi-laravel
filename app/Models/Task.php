@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Konsep extends Model
+class Task extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        "name",
-        "berkas",
-        "cabang_id",
-        'task_id',
+        'berkas', 'deskripsi'
     ];
+
 }

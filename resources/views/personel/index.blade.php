@@ -51,6 +51,7 @@
         <div class="text-xl font-semibold text-gray-800 px-4 py-2 bg-gray-100 flex gap-4">
             <a href="/personel" class="underline">Personel</a>
             <a href="/personel/konsep">Konsep</a>
+            <a href="/personel/task">Task</a>
         </div>
         <div class="flex justify-between items-center px-4 py-2 bg-gray-100">
             <form action="" class="gap-2 flex">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
+use App\Models\TaskNotification;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -19,5 +20,12 @@ class NotificationController extends Controller
             $notifications = [];
         }
         return view('notification.index', compact('notifications'));
+    }
+
+    public function index_task()
+    {
+        $tasks = TaskNotification::where('user_id', auth()->user()->id)->get();
+        TaskNotification::where('user_id', auth()->user()->id)->update(['is_read' => true]);
+        return view('notification.task', ['notifications' => $tasks]);
     }
 }

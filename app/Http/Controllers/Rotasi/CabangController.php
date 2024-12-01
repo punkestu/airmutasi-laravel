@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cabang;
 use App\Models\Kelas;
 use App\Models\Konsep;
+use App\Models\Task;
 use Illuminate\Support\Facades\DB;
 
 class CabangController extends Controller
@@ -254,13 +255,15 @@ class CabangController extends Controller
     public function konsep($id)
     {
         $konseps = Konsep::where('cabang_id', $id)->get();
-        return view('rotasi.cabang.konsep', ['konseps' => $konseps, 'cabang_id' => $id]);
+        $tasks = Task::all();
+        return view('rotasi.cabang.konsep', ['konseps' => $konseps, 'cabang_id' => $id, 'tasks' => $tasks]);
     }
 
     public function uploadKonsep($id, Request $request)
     {
         $request->validate([
             'name' => 'required',
+            'task' => 'required|exists:tasks,id',
             'berkas' => 'file|mimes:pdf|max:2048',
         ]);
 
@@ -279,6 +282,7 @@ class CabangController extends Controller
         $konsep->name = $request->name;
         $konsep->cabang_id = $id;
         $konsep->berkas = $berkas;
+        $konsep->task_id = $request->task;
         $konsep->save();
         return redirect()->back()->with('success', 'Konsep berhasil ditambahkan');
     }

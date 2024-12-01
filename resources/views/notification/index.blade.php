@@ -9,8 +9,12 @@
 <body class="font-sans tracking-wider">
     @include('components/header', ['static' => true])
     @include('components.modal-component')
-    <main class="px-8 py-16">
+    <main class="px-8 py-16">        
         <h1 class="text-3xl font-semibold mb-2">Notifikasi</h1>
+        <div class="text-xl font-semibold text-gray-800 px-4 py-2 bg-gray-100 flex gap-4">
+            <a href="/rotasi/notification" class="underline">Notifikasi</a>
+            <a href="/rotasi/notification/task">Notifikasi Task</a>
+        </div>
         <section class="flex flex-col gap-4 min-h-[50vh]">
             @forelse ($notifications as $notification)
                 <div

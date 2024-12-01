@@ -12,6 +12,7 @@ use App\Http\Controllers\PersonelController;
 use App\Http\Controllers\Rotasi\CabangController as RotasiCabangController;
 use App\Http\Controllers\Rotasi\SelektifAdminController as RotasiSelektifAdminController;
 use App\Http\Controllers\Rotasi\PengajuanController as RotasiPengajuanController;
+use App\Http\Controllers\TaskController;
 use App\Models\Cabang;
 use App\Models\Personel;
 
@@ -73,7 +74,10 @@ Route::group(['prefix' => 'personel', 'middleware' => [
     Route::middleware(['is.admin'])->get("/", [PersonelController::class, 'index'])->name('personel');
     Route::middleware(['is.admin'])->post("/import", [PersonelController::class, 'importAllWithCsv'])->name('personel.import');
     Route::middleware(['is.admin'])->get('/konsep', [PersonelController::class, 'konsep'])->name("konsep");
+    Route::middleware(['is.admin'])->get('/task', [TaskController::class, 'index'])->name("task");
+    Route::get('/task/{id}', [TaskController::class, 'detail'])->name("task.detail");
     Route::middleware(['is.admin'])->post('/konsep', [PersonelController::class, 'uploadKonsep']);
+    Route::middleware(['is.admin'])->post('/task', [TaskController::class, 'store']);
     Route::get('/cabang/{id}', [PersonelController::class, 'cabang'])->name('personel.index');
     Route::group(['prefix' => 'add', 'middleware' => [
         'is.admin'
@@ -122,6 +126,7 @@ Route::group(['prefix' => 'rotasi', 'middleware' => [
         Route::post("/{id}", [RotasiSelektifAdminController::class, 'selektif']);
     });
     Route::get("/notification", [NotificationController::class, 'index'])->name('rotasi.notifikasi');
+    Route::get("/notification/task", [NotificationController::class, 'index_task'])->name('rotasi.notifikasi');
 });
 
 Route::group(['prefix' => 'promosi', 'middleware' => [

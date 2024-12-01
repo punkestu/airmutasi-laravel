@@ -47,54 +47,18 @@
             </form>
         </div>
     </div>
-    <main class="min-h-screen">
-        <form action="" method="POST" enctype="multipart/form-data" class="flex flex-col p-4">
-            @csrf
-            <div class="flex flex-col gap-2 border-2 p-2 rounded-md">
-                <label for="name">Nama</label>
-                <input type="text" name="name" id="name"
-                    class="resize-none flex-grow p-2 border-2 border-slate-400 rounded-s-md"
-                    placeholder="Nama Berkas ...">
-                <label for="task">Task</label>
-                <select name="task" id="task">
-                    <option value="">Pilih Tugas</option>
-                    @foreach ($tasks as $task)
-                        <option value="{{ $task->id }}">{{ $task->deskripsi }}</option>
-                    @endforeach
-                </select>
-                <label for="url">Berkas</label>
-                <div class="flex w-full">
-                    <input type="text" name="url" id="url"
-                        class="resize-none flex-grow p-2 border-2 border-slate-400 rounded-s-md"
-                        placeholder="URL Berkas">
-                    <button id="url_set" type="button"
-                        class="bg-[#003285] opacity-80 hover:opacity-100 duration-200 text-white p-2 rounded-e-lg font-semibold">Set</button>
-                </div>
-                <p class="text-center">atau</p>
-                <label
-                    class="bg-[#003285] opacity-80 hover:opacity-100 duration-200 text-white px-2 py-1 rounded-md font-medium hover:cursor-pointer text-center">
-                    <span id="berkas_label" class="text-center">Upload Berkas (max 2MB)</span>
-                    <input type="file" name="berkas" id="berkas" class="h-0 w-0" accept=".pdf,.jpeg,.png">
-                </label>
-                <p id="errors" class="text-center text-red-500 text-sm hidden"></p>
-                <button
-                    class="bg-[#003285] opacity-80 hover:opacity-100 duration-200 text-white px-2 py-1 rounded-md font-medium hover:cursor-pointer text-center">Kirim</button>
-            </div>
-        </form>
-        <div class="flex flex-col px-4 py-2 gap-2">
-            @foreach ($konseps as $konsep)
+    <main class="min-h-screen">            
+        <div class="flex flex-col px-4 py-2 gap-2">            
                 <div class="w-full">
-                    <a href="{{ $konsep->berkas }}" class="w-full flex gap-2" target="_blank">{{ $konsep->name }} <svg
-                            class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                    <a href="{{$task->berkas}}" class="w-full flex gap-2" target="_blank">{{ $task->deskripsi }} <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778" />
                         </svg>
                     </a>
-                    <iframe class="w-full h-[60vh]" src="{{ $konsep->berkas }}" frameborder="0"></iframe>
-                </div>
-            @endforeach
+                    <embed class="w-full h-[60vh]" src="{{ $task->berkas }}" frameborder="0"></embed>                    
+                </div>           
         </div>
     </main>
     @include('components.footer')

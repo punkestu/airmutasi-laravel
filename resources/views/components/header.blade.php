@@ -28,7 +28,7 @@
                     ($adminHasUnreadNotifications) ||
                     (auth()->user()->profile &&
                         auth()->user()->profile->cabang &&
-                        auth()->user()->profile->cabang->notreadnotifications->count() > 0);
+                        auth()->user()->profile->cabang->notreadnotifications->count() > 0) || (auth()->user()->notReadTaskNotifications->count() > 0);
             @endphp
             <a href="/rotasi/notification"
                 class="flex aspect-square border-2 rounded-full p-1 {{ $hasNotification ? 'border-red-500' : 'border-gray-800' }}">

@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function notReadTaskNotifications()
+    {
+        return $this->hasMany(TaskNotification::class)->where('is_read', false);
+    }
 }
