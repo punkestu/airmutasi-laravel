@@ -36,7 +36,7 @@
                         class="bg-white hover:bg-[#003285] text-black hover:text-white border-2 border-[#003285] duration-200 w-full text-center p-2 rounded-lg font-semibold mb-2">Hapus
                         Cabang</a>
                     <a href="/rotasi/cabang/konsep/{{ $cabang->id }}"
-                        class="bg-white hover:bg-[#003285] text-black hover:text-white border-2 border-[#003285] duration-200 w-full text-center p-2 rounded-lg font-semibold">Konsep</a>
+                        class="bg-white hover:bg-[#003285] text-black hover:text-white border-2 border-[#003285] duration-200 w-full text-center p-2 rounded-lg font-semibold">Berkas</a>
                 @endcan
             </aside>
             <aside class="flex-grow col-span-2 grid md:grid-cols-2 md:grid-rows-1 gap-4">
