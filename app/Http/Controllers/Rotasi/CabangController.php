@@ -286,4 +286,9 @@ class CabangController extends Controller
         $konsep->save();
         return redirect()->back()->with('success', 'Konsep berhasil ditambahkan');
     }
+
+    public function struktur()
+    {
+        return view('rotasi.cabang.struktur');
+    }
 }

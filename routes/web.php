@@ -37,6 +37,7 @@ Route::get('/', function () {
 Route::middleware("guest")->get("/login", [AuthController::class, 'loginView'])->name('login');
 Route::middleware("guest")->post("/login", [AuthController::class, 'login']);
 Route::middleware("auth:web")->get("/logout", [AuthController::class, 'logout'])->name('logout');
+Route::middleware("auth:web")->get("/cabang/struktur", [RotasiCabangController::class, 'struktur'])->name('cabang.struktur');
 
 Route::group(['prefix' => 'download', 'middleware' => ["auth:web"]], function () {
     Route::middleware('is.admin')->get('/pengajuan/{id}', [RotasiPengajuanController::class, 'document']);
