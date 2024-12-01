@@ -56,7 +56,7 @@
                     class="resize-none flex-grow p-2 border-2 border-slate-400 rounded-s-md"
                     placeholder="Nama Berkas ...">
                 <label for="task">Task</label>
-                <select name="task" id="task">
+                <select name="task" id="task" class="flex-grow p-2 border-2 border-slate-400 rounded-s-md">
                     <option value="">Pilih Tugas</option>
                     @foreach ($tasks as $task)
                         <option value="{{ $task->id }}">{{ $task->deskripsi }}</option>
