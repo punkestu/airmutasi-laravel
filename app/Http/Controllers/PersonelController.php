@@ -84,6 +84,8 @@ class PersonelController extends Controller
         $jabatan = $jabatan->map(function ($jabatan) {
             return $jabatan->pluck('jabatan')->toArray();
         })->toArray();
+        $categories = array_keys($jabatan);
+        $jabatans = PersonelJabatanCategory::all()->select('jabatan');
         if ($request->tab === 'ACO') {
             $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan) {
                 $query->with(['kompetensis', 'pengajuan_pindah' => [
@@ -145,15 +147,26 @@ class PersonelController extends Controller
                 })->limit($limit)->offset($page * $limit);
             }])->find($id);
         } else {
-            $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan) {
-                $query->with(['kompetensis', 'pengajuan_pindah' => [
-                    'lokasiAwal',
-                    'lokasiTujuan',
-                ]])->where(function ($query) use ($jabatan) {
-                    //$query->whereNotIn('posisi', ['ATC (APS)', 'ACO', 'AIS', 'ATFM', 'TAPOR', 'ATSSystem', 'AERONAUTICAL COMMUNICATION OFFICER', 'AERONAUTICAL INFORMATION SERVICE', 'AIR TRAFFIC FLOW MANAGEMENT', 'TOWER APPROACH', 'STAF PELAPORAN DATA', 'AIR TRAFFIC SERVICES SYSTEM', 'AIR TRAFFIC CONTROLLER'])->whereNot('posisi', 'LIKE', 'ATC%')->whereNot('posisi', 'LIKE', 'AIS%');
-                    $query->whereNotIn('posisi', $jabatan['ACO'] ?? [])->whereNotIn('posisi', $jabatan['AIS'] ?? [])->whereNotIn('posisi', $jabatan['ATFM'] ?? [])->whereNotIn('posisi', $jabatan['TAPOR'] ?? [])->whereNotIn('posisi', $jabatan['ATSSystem'] ?? [])->whereNotIn('posisi', $jabatan['ATC'] ?? [])->whereNot('posisi', 'LIKE', 'ATC%')->whereNot('posisi', 'LIKE', 'AIS%')->whereNot('posisi', 'LIKE', 'ATFM%')->whereNot('posisi', 'LIKE', 'TAPOR%')->whereNot('posisi', 'LIKE', 'ATSSystem%')->whereNot('posisi', 'LIKE', 'ACO%');
-                })->limit($limit)->offset($page * $limit);
-            }])->find($id);
+            if ($request->tab && array_key_exists($request->tab, $jabatan)) {
+                $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan, $request) {
+                    $query->with(['kompetensis', 'pengajuan_pindah' => [
+                        'lokasiAwal',
+                        'lokasiTujuan',
+                    ]])->where(function ($query) use ($jabatan, $request) {
+                        $query->whereIn('posisi', $jabatan[$request->tab] ?? []);
+                    })->limit($limit)->offset($page * $limit);
+                }])->find($id);
+            } else {
+                $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatans) {
+                    $query->with(['kompetensis', 'pengajuan_pindah' => [
+                        'lokasiAwal',
+                        'lokasiTujuan',
+                    ]])->where(function ($query) use ($jabatans) {
+                        //$query->whereNotIn('posisi', ['ATC (APS)', 'ACO', 'AIS', 'ATFM', 'TAPOR', 'ATSSystem', 'AERONAUTICAL COMMUNICATION OFFICER', 'AERONAUTICAL INFORMATION SERVICE', 'AIR TRAFFIC FLOW MANAGEMENT', 'TOWER APPROACH', 'STAF PELAPORAN DATA', 'AIR TRAFFIC SERVICES SYSTEM', 'AIR TRAFFIC CONTROLLER'])->whereNot('posisi', 'LIKE', 'ATC%')->whereNot('posisi', 'LIKE', 'AIS%');
+                        $query->whereNotIn('posisi', $jabatans)->whereNot('posisi', 'LIKE', 'ATC%')->whereNot('posisi', 'LIKE', 'AIS%')->whereNot('posisi', 'LIKE', 'ATFM%')->whereNot('posisi', 'LIKE', 'TAPOR%')->whereNot('posisi', 'LIKE', 'ATSSystem%')->whereNot('posisi', 'LIKE', 'ACO%');
+                    })->limit($limit)->offset($page * $limit);
+                }])->find($id);
+            }
         }
         if (!$cabang) abort(404);
         if ($cabang->nama === 'PUSAT INFORMASI AERONAUTIKA') {
@@ -171,6 +184,7 @@ class PersonelController extends Controller
             'cabang' => $cabang,
             'tab' => $request->tab ?? 'ATC',
             'page' => $page ?? 0,
+            'categories' => $categories,
         ]);
     }
 

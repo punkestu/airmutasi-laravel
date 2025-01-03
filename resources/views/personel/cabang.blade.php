@@ -58,18 +58,10 @@
             <div class="bg-white rounded-lg border-2 border-[#293676]">
                 <div class="grid grid-cols-12 gap-4 items-center p-4 border-b-2 border-[#293676] text-[#293676]">
                     <aside class="flex gap-4 col-span-12 overflow-x-auto">
-                        <a class="flex-grow {{ $tab == 'ATC' ? 'font-semibold underline' : '' }}"
-                            href="/personel/cabang/{{ $cabang->id }}?tab=ATC">Personel ATC</a>
-                        <a class="flex-grow {{ $tab == 'ACO' ? 'font-semibold underline' : '' }}"
-                            href="/personel/cabang/{{ $cabang->id }}?tab=ACO">Personel ACO</a>
-                        <a class="flex-grow {{ $tab == 'AIS' ? 'font-semibold underline' : '' }}"
-                            href="/personel/cabang/{{ $cabang->id }}?tab=AIS">Personel AIS</a>
-                        <a class="flex-grow {{ $tab == 'ATFM' ? 'font-semibold underline' : '' }}"
-                            href="/personel/cabang/{{ $cabang->id }}?tab=ATFM">Personel ATFM</a>
-                        <a class="flex-grow {{ $tab == 'TAPOR' ? 'font-semibold underline' : '' }}"
-                            href="/personel/cabang/{{ $cabang->id }}?tab=TAPOR">Personel TAPOR</a>
-                        <a class="flex-grow {{ $tab == 'ATSSystem' ? 'font-semibold underline' : '' }}"
-                            href="/personel/cabang/{{ $cabang->id }}?tab=ATSSystem">Personel ATS System</a>
+                        @foreach ($categories as $category)
+                            <a class="flex-grow {{ $tab == $category ? 'font-semibold underline' : '' }}"
+                                href="/personel/cabang/{{ $cabang->id }}?tab={{ $category }}">Personel {{ $category }}</a>
+                        @endforeach
                         <a class="flex-grow {{ $tab == 'lainnya' ? 'font-semibold underline' : '' }}"
                             href="/personel/cabang/{{ $cabang->id }}?tab=lainnya">Lainnya</a>
                     </aside>
