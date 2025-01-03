@@ -70,4 +70,9 @@ class Personel extends Model
     {
         return $this->belongsTo(Cabang::class, 'lokasi_induk');
     }
+
+    public function pengajuan_pindah()
+    {
+        return $this->hasMany(Pengajuan::class, 'nik', 'nik')->where('status', '=', 'diajukan')->orderBy('created_at', 'desc');
+    }
 }

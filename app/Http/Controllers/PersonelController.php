@@ -21,7 +21,10 @@ class PersonelController extends Controller
         $cabang_id = request()->get('cabang_id');
         $cabang = request()->get('cabang');
         if ($nik == "" && $name == "" && $cabang == "") {
-            $personels = Personel::limit($limit)->offset($page * $limit)->get();
+            $personels = Personel::with(['cabang', 'lokasiCabang', 'lokasiInduk', 'pengajuan_pindah' => [
+            'lokasiAwal',
+            'lokasiTujuan',
+        ]])->limit($limit)->offset($page * $limit)->get();
             $cabangs = Cabang::all();
             if (!$cabangs) abort(404);
             return view('personel.index', [
@@ -36,7 +39,10 @@ class PersonelController extends Controller
                 ],
             ]);
         }
-        $personels = Personel::where('nik', 'like', $nik . '%')->where('name', 'like', '%' . $name . '%');
+        $personels = Personel::with(['cabang', 'lokasiCabang', 'lokasiInduk', 'pengajuan_pindah' => [
+            'lokasiAwal',
+            'lokasiTujuan',
+        ]])->where('nik', 'like', $nik . '%')->where('name', 'like', '%' . $name . '%');
         if ($cabang != "") {
             $personels = $personels->where('cabang_id', $cabang_id);
         }
