@@ -65,7 +65,10 @@
                     <div
                         class="flex items-center justify-center bg-white md:h-80 lg:h-[22rem] xl:h-96 rounded-lg border-8 border-[#003285]">
                         <img id="thumbnail-placeholder" src="/images/icons/Full Image.svg" alt="image" />
-                        <img id="thumbnail" class="hidden w-full h-full object-cover" />
+                        <div id="thumbnail-container" class="w-full h-full relative flex hidden items-center justify-center">
+                            <img id="thumbnail-bg" class="hidden w-full h-full object-cover blur-md" />
+                            <img id="thumbnail" class="absolute top-0 hidden h-full object-cover" />
+                        </div>
                     </div>
                     <h1 id="nama" class="px-2 font-semibold text-3xl hidden"></h1>
                     <p id="alamat" class="p-2 text-center">
@@ -209,10 +212,15 @@
     <script>
         // set data to aside cabang's summary
         function setCabang(cabang) {
+            document.getElementById('thumbnail-bg').src = cabang.thumbnail_url && cabang.thumbnail_url !== 'NULL' ? cabang
+                .thumbnail_url :
+                "/images/default_tower.jpg";
             document.getElementById('thumbnail').src = cabang.thumbnail_url && cabang.thumbnail_url !== 'NULL' ? cabang
                 .thumbnail_url :
                 "/images/default_tower.jpg";
             document.getElementById('thumbnail-placeholder').classList.add('hidden');
+            document.getElementById('thumbnail-container').classList.remove('hidden');
+            document.getElementById('thumbnail-bg').classList.remove('hidden');
             document.getElementById('thumbnail').classList.remove('hidden');
             document.getElementById('alamat').classList.remove('text-center');
             document.getElementById('alamat').innerText = cabang.alamat;
