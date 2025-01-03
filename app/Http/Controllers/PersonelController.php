@@ -22,9 +22,9 @@ class PersonelController extends Controller
         $cabang = request()->get('cabang');
         if ($nik == "" && $name == "" && $cabang == "") {
             $personels = Personel::with(['cabang', 'lokasiCabang', 'lokasiInduk', 'pengajuan_pindah' => [
-            'lokasiAwal',
-            'lokasiTujuan',
-        ]])->limit($limit)->offset($page * $limit)->get();
+                'lokasiAwal',
+                'lokasiTujuan',
+            ]])->limit($limit)->offset($page * $limit)->get();
             $cabangs = Cabang::all();
             if (!$cabangs) abort(404);
             return view('personel.index', [
@@ -86,49 +86,70 @@ class PersonelController extends Controller
         })->toArray();
         if ($request->tab === 'ACO') {
             $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan) {
-                $query->with(['kompetensis'])->where(function ($query) use ($jabatan) {
+                $query->with(['kompetensis', 'pengajuan_pindah' => [
+                    'lokasiAwal',
+                    'lokasiTujuan',
+                ]])->where(function ($query) use ($jabatan) {
                     //$query->where('posisi', 'AERONAUTICAL COMMUNICATION OFFICER')->orWhere('posisi', 'ACO');
                     $query->whereIn('posisi', $jabatan['ACO'] ?? [])->orWhere('posisi', 'LIKE', 'ACO%');
                 })->limit($limit)->offset($page * $limit);
             }])->find($id);
         } else if ($request->tab === 'AIS') {
             $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan) {
-                $query->with(['kompetensis'])->where(function ($query) use ($jabatan) {
+                $query->with(['kompetensis', 'pengajuan_pindah' => [
+                    'lokasiAwal',
+                    'lokasiTujuan',
+                ]])->where(function ($query) use ($jabatan) {
                     //$query->where('posisi', 'AIS')->orWhere('posisi', 'AERONAUTICAL INFORMATION SERVICE')->orWhere('posisi', 'LIKE', 'AIS%');
                     $query->whereIn('posisi', $jabatan['AIS'] ?? [])->orWhere('posisi', 'LIKE', 'AIS%');
                 })->limit($limit)->offset($page * $limit);
             }])->find($id);
         } else if ($request->tab === 'ATFM') {
             $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan) {
-                $query->with(['kompetensis'])->where(function ($query) use ($jabatan) {
+                $query->with(['kompetensis', 'pengajuan_pindah' => [
+                    'lokasiAwal',
+                    'lokasiTujuan',
+                ]])->where(function ($query) use ($jabatan) {
                     //$query->where('posisi', 'ATFM')->orWhere('posisi', 'AIR TRAFFIC FLOW MANAGEMENT')->orWhere('posisi', 'STAF ATFM');
                     $query->whereIn('posisi', $jabatan['ATFM'] ?? [])->orWhere('posisi', 'LIKE', 'ATFM%');
                 })->limit($limit)->offset($page * $limit);
             }])->find($id);
         } else if ($request->tab === 'TAPOR') {
             $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan) {
-                $query->with(['kompetensis'])->where(function ($query) use ($jabatan) {
+                $query->with(['kompetensis', 'pengajuan_pindah' => [
+                    'lokasiAwal',
+                    'lokasiTujuan',
+                ]])->where(function ($query) use ($jabatan) {
                     //$query->where('posisi', 'TAPOR')->orWhere('posisi', 'STAF PELAPORAN DATA');
                     $query->whereIn('posisi', $jabatan['TAPOR'] ?? [])->orWhere('posisi', 'LIKE', 'TAPOR%');
                 })->limit($limit)->offset($page * $limit);
             }])->find($id);
         } else if ($request->tab === 'ATSSystem') {
             $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan) {
-                $query->with(['kompetensis'])->where(function ($query) use ($jabatan) {
+                $query->with(['kompetensis', 'pengajuan_pindah' => [
+                    'lokasiAwal',
+                    'lokasiTujuan',
+                ]])->where(function ($query) use ($jabatan) {
                     //$query->where('posisi', 'ATSSystem')->orWhere('posisi', 'AIR TRAFFIC SERVICES SYSTEM')->orWhere('posisi', 'SPESIALIS ATS SYSTEM');
                     $query->whereIn('posisi', $jabatan['ATSSystem'] ?? [])->orWhere('posisi', 'LIKE', 'ATSSystem%');
                 })->limit($limit)->offset($page * $limit);
             }])->find($id);
         } else if ($request->tab === 'ATC') {
             $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan) {
-                $query->with(['kompetensis'])->where(function ($query) use ($jabatan) {
+                $query->with(['kompetensis', 'pengajuan_pindah' => [
+                    'lokasiAwal',
+                    'lokasiTujuan',
+                ]])->where(function ($query) use ($jabatan) {
                     //$query->where('posisi', 'LIKE', 'ATC%')->orWhere('posisi', 'AIR TRAFFIC CONTROLLER');
                     $query->whereIn('posisi', $jabatan['ATC'] ?? [])->orWhere('posisi', 'LIKE', 'ATC%');
                 })->limit($limit)->offset($page * $limit);
             }])->find($id);
         } else {
             $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page, $jabatan) {
-                $query->with(['kompetensis'])->where(function ($query) use ($jabatan) {
+                $query->with(['kompetensis', 'pengajuan_pindah' => [
+                    'lokasiAwal',
+                    'lokasiTujuan',
+                ]])->where(function ($query) use ($jabatan) {
                     //$query->whereNotIn('posisi', ['ATC (APS)', 'ACO', 'AIS', 'ATFM', 'TAPOR', 'ATSSystem', 'AERONAUTICAL COMMUNICATION OFFICER', 'AERONAUTICAL INFORMATION SERVICE', 'AIR TRAFFIC FLOW MANAGEMENT', 'TOWER APPROACH', 'STAF PELAPORAN DATA', 'AIR TRAFFIC SERVICES SYSTEM', 'AIR TRAFFIC CONTROLLER'])->whereNot('posisi', 'LIKE', 'ATC%')->whereNot('posisi', 'LIKE', 'AIS%');
                     $query->whereNotIn('posisi', $jabatan['ACO'] ?? [])->whereNotIn('posisi', $jabatan['AIS'] ?? [])->whereNotIn('posisi', $jabatan['ATFM'] ?? [])->whereNotIn('posisi', $jabatan['TAPOR'] ?? [])->whereNotIn('posisi', $jabatan['ATSSystem'] ?? [])->whereNotIn('posisi', $jabatan['ATC'] ?? [])->whereNot('posisi', 'LIKE', 'ATC%')->whereNot('posisi', 'LIKE', 'AIS%')->whereNot('posisi', 'LIKE', 'ATFM%')->whereNot('posisi', 'LIKE', 'TAPOR%')->whereNot('posisi', 'LIKE', 'ATSSystem%')->whereNot('posisi', 'LIKE', 'ACO%');
                 })->limit($limit)->offset($page * $limit);
@@ -139,7 +160,10 @@ class PersonelController extends Controller
             if ($request->tab != "AIS") $cabang->personels = [];
             else {
                 $cabang = Cabang::with(['personels' => function ($query) use ($limit, $page) {
-                    $query->limit($limit)->offset($page * $limit);
+                    $query->with(['pengajuan_pindah' => [
+                        'lokasiAwal',
+                        'lokasiTujuan',
+                    ]])->limit($limit)->offset($page * $limit);
                 }])->find($id);
             }
         }
