@@ -172,6 +172,9 @@
                                     Job Text
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Tidak Pindah
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Pengajuan Pindah
                                 </th>
                             </tr>
@@ -265,6 +268,9 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ $personel->job_text }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $personel->tidak_pindah ? 'Tidak pindah sampai ' . date('j F, Y', strtotime($personel->expired)) : '-' }}
                                     </td>
                                     <td class="px-6 py-4">
                                         @if (count($personel->pengajuan_pindah) > 0)
