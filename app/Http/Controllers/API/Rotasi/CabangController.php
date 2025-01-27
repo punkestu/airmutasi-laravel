@@ -73,7 +73,8 @@ class CabangController extends Controller
             ['cabang_id' => $request->cabang_id],
             ['cabang_id' => $request->cabang_id, 'root_id' => $request->root_id]
         );
-        return response()->json(['message' => 'success']);
+        $cabangNodes = CabangNode::with('cabang')->get();
+        return response()->json(['message' => 'success', 'cabangNodes' => $cabangNodes]);
     }
     public function deleteNode($cabang_id)
     {

@@ -73,6 +73,21 @@
                 }).then(response => response.json())
                 .then(data => {
                     console.log(data);
+                    const newNodes = data.cabangNodes;
+                    document.querySelectorAll('#nodes > div select').forEach(node => {
+                        const selectedNode = node.value;
+                        node.innerHTML = '';
+                        node.innerHTML = '<option value="">PUSAT</option>';
+                        newNodes.forEach(newNode => {
+                            const option = document.createElement('option');
+                            option.value = newNode.id;
+                            option.textContent = newNode.cabang.nama;
+                            if (newNode.id == selectedNode) {
+                                option.selected = true;
+                            }
+                            node.appendChild(option);
+                        });
+                    });
                     alert('Berhasil disimpan');
                 })
                 .catch(error => console.error(error));
