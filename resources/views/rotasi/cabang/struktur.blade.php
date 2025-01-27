@@ -18,6 +18,28 @@
     <script src="/script/chatbot.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apextree"></script>
     <script>
+        // create at least 6 pair bg and fg colors
+        const colors = [
+            ['bg-[#f44336]', 'text-[#fff]'],
+            ['bg-[#e91e63]', 'text-[#fff]'],
+            ['bg-[#9c27b0]', 'text-[#fff]'],
+            ['bg-[#673ab7]', 'text-[#fff]'],
+            ['bg-[#3f51b5]', 'text-[#fff]'],
+            ['bg-[#2196f3]', 'text-[#fff]'],
+            ['bg-[#03a9f4]', 'text-[#fff]'],
+            ['bg-[#00bcd4]', 'text-[#fff]'],
+            ['bg-[#009688]', 'text-[#fff]'],
+            ['bg-[#4caf50]', 'text-[#fff]'],
+            ['bg-[#8bc34a]', 'text-[#fff]'],
+            ['bg-[#cddc39]', 'text-[#333]'],
+            ['bg-[#ffeb3b]', 'text-[#333]'],
+            ['bg-[#ffc107]', 'text-[#333]'],
+            ['bg-[#ff9800]', 'text-[#333]'],
+            ['bg-[#ff5722]', 'text-[#fff]'],
+            ['bg-[#795548]', 'text-[#fff]'],
+            ['bg-[#9e9e9e]', 'text-[#333]'],
+            ['bg-[#607d8b]', 'text-[#fff]'],
+        ];
         const options = {
             contentKey: 'data',
             width: "100%",
@@ -29,12 +51,17 @@
             childrenSpacing: 50,
             siblingSpacing: 20,
             direction: 'left',
-            enableExpandCollapse: true,
-            nodeTemplate: (content) =>
-                `<div class="text-black flex items-center justify-center h-full text-center">${content.name}</div>`,
+            nodeTemplate: (content) => {
+                const color = colors[content.level % colors.length];
+                return `<div onclick="toggleNode(${content.node_id})" class="text-black flex items-center justify-center h-full text-center hover:cursor-pointer ${color[0]} ${color[1]}">${content.name}</div>`
+            },
             canvasStyle: 'border: 1px solid black;background: #f6f6f6;',
             enableToolbar: true,
         };
+
+        var realData = [];
+        const treeContainer = document.getElementById('svg-tree');
+        const tree = new ApexTree(treeContainer, options);
 
         fetch("/api/struktur-cabang", {
                 method: 'GET',
@@ -47,15 +74,46 @@
                 data = {
                     id: "0",
                     data: {
+                        node_id: 0,
                         name: 'MUTASI CABANG',
+                        collapsed: false,
+                        level: 0
                     },
                     children: data
                 };
-                const treeContainer = document.getElementById('svg-tree');
-                const tree = new ApexTree(treeContainer, options);
-                tree.render(data);
+                realData = data;
+                tree.render(filterCollapsed(data));
             })
             .catch(error => console.error(error));
+    </script>
+    <script>
+        function toggleNode(id) {
+            realData = toggleCollapsed(realData, id);
+            tree.render(filterCollapsed(realData));
+        }
+
+        function toggleCollapsed(data, id) {
+            if (data.data.node_id === id) {
+                data.data.collapsed = !data.data.collapsed;
+            } else if (data.children) {
+                data.children = data.children.map(child => toggleCollapsed(child, id));
+            }
+
+            return data;
+        }
+
+        function filterCollapsed(data) {
+            var result = JSON.parse(JSON.stringify(data));
+            if (result && result.children) {
+                if (result.data.collapsed) {
+                    result.children = [];
+                } else {
+                    result.children = data.children.map(child => filterCollapsed(child));
+                }
+            }
+
+            return result;
+        }
     </script>
 </body>
 

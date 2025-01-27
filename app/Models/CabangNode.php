@@ -29,23 +29,26 @@ class CabangNode extends Model
         return $this->hasMany(CabangNode::class, 'root_id');
     }
 
-    public static function getTree($rootId = null)
+    public static function getTree($level = 0, $rootId = null)
     {
         $roots = CabangNode::with('cabang', 'children')->where('root_id', $rootId)->get();
         if ($roots->count() == 0) {
             return null;
         }
 
-        $result = $roots->map(function ($root) {
+        $result = $roots->map(function ($root) use ($level) {
             $result = [
                 'id' => (string)$root->id,
                 'cabang_id' => $root->cabang_id,
                 'root_id' => $root->root_id,
                 'cabang' => $root->cabang,
                 'data' => [
+                    'node_id' => $root->id,
                     'name' => $root->cabang->nama,
+                    'collapsed' => true,
+                    'level' => $level + 1,
                 ],
-                'children' => CabangNode::getTree($root->id),
+                'children' => CabangNode::getTree($level + 1, $root->id),
             ];
             if ($result["children"] == null) {
                 unset($result["children"]);
