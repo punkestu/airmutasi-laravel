@@ -297,7 +297,7 @@ class CabangController extends Controller
     {
         $nodes = CabangNode::getTree();
         $snodes = CabangNode::with('cabang')->get();
-        $cabangs = Cabang::all();
+        $cabangs = Cabang::all()->sortBy('nama');
         return view('rotasi.cabang.struktur-edit', ['nodes' => $nodes, 'snodes' => $snodes, 'cabangs' => $cabangs]);
     }
 }
