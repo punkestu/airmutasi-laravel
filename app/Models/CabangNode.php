@@ -31,47 +31,27 @@ class CabangNode extends Model
 
     public static function getTree($rootId = null)
     {
-        if ($rootId === null) {
-            $roots = CabangNode::with('cabang', 'children')->whereNull('root_id')->get();
-            if ($roots->count() == 0) {
-                return null;
-            }
-
-            return $roots->map(function ($root) {
-                return [
-                    'id' => (string)$root->id,
-                    'cabang_id' => $root->cabang_id,
-                    'root_id' => $root->root_id,
-                    'cabang' => $root->cabang,
-                    'data' => [
-                        'name' => $root->cabang->nama,
-                    ],
-                    'children' => $root->children->count() > 0 ? $root->children->map(function () use ($root) {
-                        return CabangNode::getTree($root->id);
-                    }) : null,
-                ];
-            });
-        }
-        $root = CabangNode::with('cabang', 'children')->where('root_id', $rootId)->first();
-        if (!$root) {
+        $roots = CabangNode::with('cabang', 'children')->where('root_id', $rootId)->get();
+        if ($roots->count() == 0) {
             return null;
         }
 
-        $result = [
-            'id' => (string)$root->id,
-            'cabang_id' => $root->cabang_id,
-            'root_id' => $root->root_id,
-            'cabang' => $root->cabang,
-            'data' => [
-                'name' => $root->cabang->nama,
-            ],
-            'children' => $root->children->count() > 0 ? $root->children->map(function () use ($root) {
-                return CabangNode::getTree($root->id);
-            }) : null,
-        ];
-        if ($result["children"] === null) {
-            unset($result["children"]);
-        }
+        $result = $roots->map(function ($root) {
+            $result = [
+                'id' => (string)$root->id,
+                'cabang_id' => $root->cabang_id,
+                'root_id' => $root->root_id,
+                'cabang' => $root->cabang,
+                'data' => [
+                    'name' => $root->cabang->nama,
+                ],
+                'children' => CabangNode::getTree($root->id),
+            ];
+            if ($result["children"] == null) {
+                unset($result["children"]);
+            }
+            return $result;
+        });
         return $result;
     }
 }
