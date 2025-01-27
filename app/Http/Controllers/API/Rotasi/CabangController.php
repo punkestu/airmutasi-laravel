@@ -69,12 +69,15 @@ class CabangController extends Controller
             'cabang_id' => 'required|exists:cabangs,id',
             'root_id' => 'nullable|exists:cabang_nodes,id',
         ]);
+        $node = CabangNode::where('cabang_id', $request->cabang_id)->first();
+        if ($node && $node->id == $request->root_id) {
+            return response()->json(['message' => 'success']);
+        }
         CabangNode::updateOrCreate(
             ['cabang_id' => $request->cabang_id],
             ['cabang_id' => $request->cabang_id, 'root_id' => $request->root_id]
         );
-        $cabangNodes = CabangNode::with('cabang')->get();
-        return response()->json(['message' => 'success', 'cabangNodes' => $cabangNodes]);
+        return response()->json(['message' => 'success']);
     }
     public function deleteNode($cabang_id)
     {

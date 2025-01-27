@@ -40,6 +40,9 @@ class CabangNode extends Model
             return $roots->map(function ($root) {
                 return [
                     'id' => (string)$root->id,
+                    'cabang_id' => $root->cabang_id,
+                    'root_id' => $root->root_id,
+                    'cabang' => $root->cabang,
                     'data' => [
                         'name' => $root->cabang->nama,
                     ],
@@ -56,6 +59,9 @@ class CabangNode extends Model
 
         $result = [
             'id' => (string)$root->id,
+            'cabang_id' => $root->cabang_id,
+            'root_id' => $root->root_id,
+            'cabang' => $root->cabang,
             'data' => [
                 'name' => $root->cabang->nama,
             ],
