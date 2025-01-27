@@ -296,7 +296,6 @@ class CabangController extends Controller
     public function strukturEdit()
     {
         $nodes = CabangNode::getTree();
-        dd($nodes);
         $snodes = CabangNode::with('cabang')->get();
         $cabangs = Cabang::all();
         return view('rotasi.cabang.struktur-edit', ['nodes' => $nodes, 'snodes' => $snodes, 'cabangs' => $cabangs]);
