@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Rotasi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cabang;
+use App\Models\CabangNode;
 
 class CabangController extends Controller
 {
@@ -56,5 +57,27 @@ class CabangController extends Controller
             ];
         });
         return response()->json($cabang);
+    }
+    public function tree()
+    {
+        $tree = CabangNode::getTree();
+        return response()->json($tree);
+    }
+    public function editNode(Request $request)
+    {
+        $request->validate([
+            'cabang_id' => 'required|exists:cabangs,id',
+            'root_id' => 'nullable|exists:cabang_nodes,id',
+        ]);
+        CabangNode::updateOrCreate(
+            ['cabang_id' => $request->cabang_id],
+            ['cabang_id' => $request->cabang_id, 'root_id' => $request->root_id]
+        );
+        return response()->json(['message' => 'success']);
+    }
+    public function deleteNode($cabang_id)
+    {
+        CabangNode::where('cabang_id', $cabang_id)->delete();
+        return response()->json(['message' => 'success']);
     }
 }

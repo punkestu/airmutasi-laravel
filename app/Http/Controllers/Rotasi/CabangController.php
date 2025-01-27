@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Rotasi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cabang;
+use App\Models\CabangNode;
 use App\Models\Kelas;
 use App\Models\Konsep;
 use App\Models\Task;
@@ -290,5 +291,12 @@ class CabangController extends Controller
     public function struktur()
     {
         return view('rotasi.cabang.struktur');
+    }
+
+    public function strukturEdit()
+    {
+        $nodes = CabangNode::with('cabang')->get();
+        $cabangs = Cabang::all();
+        return view('rotasi.cabang.struktur-edit', ['nodes' => $nodes, 'cabangs' => $cabangs]);
     }
 }

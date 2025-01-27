@@ -194,6 +194,9 @@
 
         function tambahJabatan() {
             const jabatanBaru = document.getElementById('jabatan-baru').value;
+            if (jabatanBaru === "") {
+                return;
+            }
             const jabatanList = document.getElementById('jabatan-list');
             jabatanList.innerHTML += itemJabatan(jabatanBaru);
             document.getElementById('jabatan-baru').value = "";

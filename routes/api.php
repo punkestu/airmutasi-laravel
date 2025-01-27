@@ -36,6 +36,9 @@ Route::group(['prefix' => 'pengajuan'], function () {
     Route::get('/{id}', [RotasiPengajuanController::class, 'byId']);
 });
 
+Route::get("/struktur-cabang", [RotasiCabangController::class, 'tree']);
+Route::post("/struktur-cabang/edit", [RotasiCabangController::class, 'editNode']);
+Route::delete("/struktur-cabang/delete/{cabang_id}", [RotasiCabangController::class, 'deleteNode']);
 Route::get("/personel", [PersonelController::class, 'search_by_nik']);
 
 Route::post('/upload-doc', [FileController::class, 'uploadDoc']);

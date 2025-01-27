@@ -59,9 +59,12 @@
                 <select name="task" id="task" class="flex-grow p-2 border-2 border-slate-400 rounded-s-md">
                     <option value="">Pilih Tugas</option>
                     @foreach ($tasks as $task)
-                        <option value="{{ $task->id }}">{{ $task->deskripsi }}</option>
+                        <option value="{{ $task->id }}" data-doc="{{ $task->berkas }}">{{ $task->deskripsi }}
+                        </option>
                     @endforeach
                 </select>
+                <a href="" id="doc-url" class="hidden text-blue-500 underline" target="_blank">Lihat
+                    Dokumen</a>
                 <label for="url">Berkas</label>
                 <div class="flex w-full">
                     <input type="text" name="url" id="url"
@@ -84,6 +87,7 @@
         <div class="flex flex-col px-4 py-2 gap-2">
             @foreach ($konseps as $konsep)
                 <div class="w-full">
+                    <h1>{{ $konsep->task->deskripsi }}</h1>
                     <a href="{{ $konsep->berkas }}" class="w-full flex gap-2" target="_blank">{{ $konsep->name }} <svg
                             class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -92,9 +96,9 @@
                                 d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778" />
                         </svg>
                     </a>
-                    <iframe>
+                    {{-- <iframe>
                         <embed class="w-full h-[60vh]" src="{{ $konsep->berkas }}" frameborder="0"></embed>
-                    </iframe>
+                    </iframe> --}}
                 </div>
             @endforeach
         </div>
@@ -103,6 +107,18 @@
     <script src="/script/nav.js"></script>
     <script src="/script/chatbot.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script>
+        document.querySelector("#task").addEventListener("change", function() {
+            var doc = this.options[this.selectedIndex].getAttribute("data-doc");
+            if (doc) {
+                document.querySelector("#doc-url").classList.remove("hidden");
+                document.querySelector("#doc-url").href = doc;
+            } else {
+                document.querySelector("#doc-url").classList.add("hidden");
+                document.querySelector("#doc-url").href = "";
+            }
+        });
+    </script>
     <script>
         document
             .querySelector(`#url_set`)

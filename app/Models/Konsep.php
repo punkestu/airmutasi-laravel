@@ -14,4 +14,9 @@ class Konsep extends Model
         "cabang_id",
         'task_id',
     ];
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
 }

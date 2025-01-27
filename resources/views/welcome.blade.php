@@ -24,7 +24,7 @@
                 <div class="grid md:grid-cols-2 gap-4 mt-4">
                     <a href="/cabang/struktur" class="bg-[#003285] text-white p-4 rounded-md">
                         <p class="font-semibold text-2xl text-center">{{ $cabangs->count() }}+</p>
-                        <p class="opacity-60 text-center">KANTOR CABANG</p>
+                        <p class="opacity-60 text-center">STRUKTUR KANTOR CABANG</p>
                     </a>
                     <a href="/personel" class="bg-[#003285] text-white p-4 rounded-md">
                         <p class="font-semibold text-2xl text-center">{{ $personel }}+</p>
