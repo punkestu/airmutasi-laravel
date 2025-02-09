@@ -72,7 +72,7 @@
                     <label
                         class="bg-[#003285] opacity-80 hover:opacity-100 duration-200 text-white px-2 py-1 rounded-md font-medium hover:cursor-pointer text-center">
                         <span id="berkas_label" class="text-center">Upload Berkas (max 2MB)</span>
-                        <input type="file" name="berkas" id="berkas" class="h-0 w-0" accept=".pdf,.jpeg,.png">
+                        <input type="file" name="berkas" id="berkas" class="h-0 w-0">
                     </label>
                     <p id="errors" class="text-center text-red-500 text-sm hidden"></p>
                     <button
