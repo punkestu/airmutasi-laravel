@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
@@ -82,6 +83,23 @@ class AccountController extends Controller
             'masa_kerja' => 'required',
             'jabatan' => 'required',
         ]);
+        $email_changed = false;
+        if ($akun->email != $request->email) {
+            $email_changed = true;
+        }
+        $password_changed = false;
+        if (bcrypt($request->password) != $akun->password) {
+            $password_changed = true;
+        }
+
+        if ($email_changed || $password_changed) {
+            UserNotification::create([
+                'user_id' => $akun->id,
+                'description' => ($email_changed ? 'Email' : '') . ($email_changed && $password_changed ? ' dan ' : '') . ($password_changed ? 'Password' : '') . ' telah diubah',
+                'is_read' => false
+            ]);
+        }
+
         $akun->name = $request->name;
         $akun->email = $request->email;
         $akun->save();

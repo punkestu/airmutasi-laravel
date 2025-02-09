@@ -3,7 +3,7 @@
 
 <head>
     @include('components/head')
-    <title>Air Mutasi</title>
+    <title>Mutant</title>
 </head>
 
 <body class="font-sans tracking-wider">

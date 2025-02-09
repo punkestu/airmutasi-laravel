@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Notification;
 use App\Models\TaskNotification;
+use App\Models\UserNotification;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -27,5 +28,15 @@ class NotificationController extends Controller
         $tasks = TaskNotification::where('user_id', auth()->user()->id)->get();
         TaskNotification::where('user_id', auth()->user()->id)->update(['is_read' => true]);
         return view('notification.task', ['notifications' => $tasks]);
+    }
+
+    public function index_user()
+    {
+        if(auth()->user()->role->name != 'admin') {
+            return redirect()->route('home');
+        }
+        $notifications = UserNotification::with('user')->orderBy('updated_at', 'desc')->get();
+        UserNotification::where('is_read', false)->update(['is_read' => true]);
+        return view('notification.user', compact('notifications'));
     }
 }

@@ -131,6 +131,7 @@ Route::group(['prefix' => 'rotasi', 'middleware' => [
     });
     Route::get("/notification", [NotificationController::class, 'index'])->name('rotasi.notifikasi');
     Route::get("/notification/task", [NotificationController::class, 'index_task'])->name('rotasi.notifikasi');
+    Route::get("/notification/user", [NotificationController::class, 'index_user'])->name('rotasi.notifikasi')->middleware(['is.admin']);
 });
 
 Route::group(['prefix' => 'promosi', 'middleware' => [
