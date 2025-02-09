@@ -25,24 +25,27 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "berkas" => "file|mimes:pdf,jpg,jpeg,png",
+            "berkas" => "file",
             "deskripsi" => "required"
         ]);
 
         if ($request->hasFile("berkas")) {
             $file = $request->file('berkas');
             $fileName = time() . '_' . $file->getClientOriginalName();
+            $mime = $file->getClientMimeType(); 
             $berkas = "/storage/" . $file->storeAs('files', $fileName, 'public');
         } else {
             $request->validate([
                 "url" => "required"
             ]);
             $berkas = $request->url;
+            $mime = "url";
         }
 
         $task = Task::create([
             "deskripsi" => $request->deskripsi,
-            "berkas" => $berkas,            
+            "berkas" => $berkas,          
+            "type" => $mime
         ]);
 
         $users = User::all();

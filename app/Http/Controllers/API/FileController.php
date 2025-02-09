@@ -11,11 +11,10 @@ class FileController extends Controller
     public function uploadDoc(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'file' => 'file|max:2048|mimes:pdf,doc,docx,jpg,jpeg,png'
+            'file' => 'file|max:2048'
         ], [
             'file.file' => 'Berkas harus berupa file',
             'file.max' => 'Ukuran berkas terlalu besar (maks 2MB)',
-            'file.mimes' => 'Tipe berkas tidak didukung'
         ]);
 
         if ($validation->fails()) {
@@ -41,7 +40,7 @@ class FileController extends Controller
     public function deleteDoc(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|max:2048|mimes:pdf,doc,docx,jpg,jpeg,png'
+            'file' => 'required|file|max:2048'
         ]);
 
         $file = $request->file('file');

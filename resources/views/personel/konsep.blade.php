@@ -91,7 +91,11 @@
                                     d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778" />
                             </svg>
                         </a>
-                        {{-- <iframe class="w-full h-[60vh]" src="{{ $konsep->berkas }}" frameborder="0"></iframe> --}}
+                        @if (array_search($konsep->type, ['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']) > -1)
+                            <iframe class="w-full h-[60vh]" src="{{ $konsep->berkas }}" frameborder="0"></iframe>
+                        @else
+                            <p>File tidak bisa ditampilkan</p>
+                        @endif
                     </div>
                 @endforeach
             </div>

@@ -380,24 +380,27 @@ class PersonelController extends Controller
     {
         $request->validate([
             "name" => "required",
-            "berkas" => "file|mimes:pdf,jpg,jpeg,png"
+            "berkas" => "file"
         ]);
 
         if ($request->hasFile("berkas")) {
             $file = $request->file('berkas');
             $fileName = time() . '_' . $file->getClientOriginalName();
+            $mime = $file->getClientMimeType();
             $berkas = "/storage/" . $file->storeAs('files', $fileName, 'public');
         } else {
             $request->validate([
                 "url" => "required"
             ]);
             $berkas = $request->url;
+            $mime = "url";
         }
 
         Konsep::create([
             "name" => $request->name,
             "berkas" => $berkas,
-            "caban_id" => null
+            "cabang_id" => null,
+            "type" => $mime
         ]);
 
         return redirect()->route("konsep");

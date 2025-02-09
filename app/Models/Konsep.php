@@ -13,6 +13,7 @@ class Konsep extends Model
         "berkas",
         "cabang_id",
         'task_id',
+        "type"
     ];
 
     public function task()

@@ -265,7 +265,7 @@ class CabangController extends Controller
         $request->validate([
             'name' => 'required',
             'task' => 'required|exists:tasks,id',
-            'berkas' => 'file|mimes:pdf|max:2048',
+            'berkas' => 'file|max:2048',
         ]);
 
         if ($request->hasFile("berkas")) {

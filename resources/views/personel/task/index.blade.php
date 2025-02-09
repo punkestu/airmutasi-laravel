@@ -72,7 +72,7 @@
                 <label
                     class="bg-[#003285] opacity-80 hover:opacity-100 duration-200 text-white px-2 py-1 rounded-md font-medium hover:cursor-pointer text-center">
                     <span id="berkas_label" class="text-center">Upload Berkas (max 2MB)</span>
-                    <input type="file" name="berkas" id="berkas" class="h-0 w-0" accept=".pdf,.jpeg,.png">
+                    <input type="file" name="berkas" id="berkas" class="h-0 w-0">
                 </label>
                 <p id="errors" class="text-center text-red-500 text-sm hidden"></p>
                 <button
@@ -82,14 +82,20 @@
         <div class="flex flex-col px-4 py-2 gap-2">
             @foreach ($tasks as $task)
                 <div class="w-full">
-                    <a href="{{$task->berkas}}" class="w-full flex gap-2" target="_blank">{{ $task->deskripsi }} <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                    <a href="{{ $task->berkas }}" class="w-full flex gap-2" target="_blank">{{ $task->deskripsi }} <svg
+                            class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778" />
                         </svg>
                     </a>
-                    <embed class="w-full h-[60vh]" src="{{ $task->berkas }}" frameborder="0"></embed>
+
+                    @if (array_search($task->type, ['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']) > -1)
+                        <iframe class="w-full h-[60vh]" src="{{ $task->berkas }}" frameborder="0"></iframe>
+                    @else
+                        <p>File tidak bisa ditampilkan</p>
+                    @endif
                 </div>
             @endforeach
         </div>
