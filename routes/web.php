@@ -13,8 +13,10 @@ use App\Http\Controllers\Rotasi\CabangController as RotasiCabangController;
 use App\Http\Controllers\Rotasi\SelektifAdminController as RotasiSelektifAdminController;
 use App\Http\Controllers\Rotasi\PengajuanController as RotasiPengajuanController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\WelcomeController;
 use App\Models\Cabang;
 use App\Models\Personel;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +30,8 @@ use App\Models\Personel;
 */
 
 
-Route::get('/', function () {
-    $personelCount = Personel::count();
-    $cabangs = Cabang::select('thumbnail_url')->get();
-    return view('welcome', ["personel" => $personelCount, "cabangs" => $cabangs]);
-})->name('landing');
+Route::get('/', [WelcomeController::class, "index"])->name('landing');
+Route::middleware(["auth:web", "is.admin"])->post("/welcome-popup", [WelcomeController::class, 'updateWelcomePopup']);
 
 Route::middleware("guest")->get("/login", [AuthController::class, 'loginView'])->name('login');
 Route::middleware("guest")->post("/login", [AuthController::class, 'login']);

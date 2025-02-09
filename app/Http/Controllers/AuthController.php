@@ -19,7 +19,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             Auth::login(Auth::user());
-            return redirect()->route('landing');
+            return redirect()->route('landing')->with('justlogin', true);
         }
         return redirect()->route('login')->with('invalid', 'Email atau password salah');
     }

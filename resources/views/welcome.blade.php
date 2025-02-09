@@ -8,6 +8,21 @@
 
 <body class="font-sans tracking-wider">
     @include('components/header', ['static' => true])
+    @if (session('justlogin'))
+        <div id="welcome-popup" tabindex="-1"
+            class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex flex-col items-end w-full md:inset-0 h-full bg-gray-500 bg-opacity-50 backdrop-blur-md p-4 gap-2">
+            <button onclick="document.querySelector('#welcome-popup').remove()">
+                <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18 17.94 6M18 18 6.06 6" />
+                </svg>
+            </button>
+            <div class="flex-grow w-full overflow-hidden">
+                <img src="{{$welcomepopup ? "/storage/".$welcomepopup->path : "/images/default_welcome.png"}}" alt="" class="w-full h-full object-contain">
+            </div>
+        </div>
+    @endif
     <main class="flex flex-col gap-4 p-8">
         <section class="flex flex-col-reverse md:flex-row items-stretch gap-4">
             <aside class="md:w-3/5 flex flex-col justify-between">

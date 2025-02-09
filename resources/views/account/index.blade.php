@@ -64,6 +64,9 @@
                     <button popovertarget="kategori-jabatan"
                         class="px-4 py-2 bg-[#003285] text-white opacity-80 hover:opacity-100 rounded-md duration-300">Kategori
                         jabatan</button>
+                    <button popovertarget="ubah-welcome-popup"
+                        class="px-4 py-2 bg-[#003285] text-white opacity-80 hover:opacity-100 rounded-md duration-300">Ubah
+                        welcome popup</button>
                     <div id="kategori-jabatan" popover class="p-2 rounded-md w-1/2 max-h-[50vh] overflow-y-auto border-2">
                         <div>
                             @if ($kategori_jabatan->count() == 0)
@@ -173,6 +176,15 @@
                             </select>
                             <button
                                 class="bg-[#7186F3] hover:bg-[#435EEF] duration-200 text-white px-4 py-2 rounded-lg font-semibold text-center">Daftarkan</button>
+                        </form>
+                    </div>
+                    <div id="ubah-welcome-popup" popover>
+                        <form action="/welcome-popup" method="POST" class="flex flex-col gap-2" enctype="multipart/form-data">
+                            @csrf
+                            <h1 class="text-center font-semibold text-xl">Ubah Welcome Popup</h1>
+                            <input type="file" name="welcome-popup" id="welcome-popup-input">
+                            <button
+                                class="bg-[#7186F3] hover:bg-[#435EEF] duration-200 text-white px-4 py-2 rounded-lg font-semibold text-center">Simpan</button>
                         </form>
                     </div>
                 </div>
