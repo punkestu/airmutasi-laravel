@@ -49,6 +49,8 @@ class Personel extends Model
         "skala_jabatan",
         'fungsi',
         "job_text",
+
+        "type",
     ];
 
     public function kompetensis()

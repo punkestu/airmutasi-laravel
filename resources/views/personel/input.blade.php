@@ -11,7 +11,8 @@
     @include('components.modal-component')
     <main>
         <section class="flex flex-col items-center my-4 px-2">
-            <form method="POST" action="/personel/add" class="w-full md:w-2/3 p-8 flex flex-col gap-4">
+            <form method="POST" action="/personel/add?type={{ $type }}"
+                class="w-full md:w-2/3 p-8 flex flex-col gap-4">
                 <h1 class="font-semibold text-xl">Tambah Data Personel</h1>
                 @csrf
                 <div class="w-full">
@@ -56,39 +57,15 @@
                     </aside>
                 </div>
                 <div class="grid md:grid-cols-2 gap-4">
-                    <aside>
+                    <aside class="relative">
                         <label class="font-semibold" for="posisi">Posisi</label><br />
-                        <select name="posisi" id="posisi"
-                            class="text-center w-full px-2 py-1 mt-1 bg-white border-2 border-slate-400 rounded-md">
-                            <option value disabled {{ !old('posisi') ? 'selected' : '' }}>--- Pilih
-                                Posisi ---
-                            </option>
-                            <option value="ATC (TWR)" {{ old('posisi') == 'ATC (TWR)' ? 'selected' : '' }}>
-                                ATC
-                                (TWR)</option>
-                            <option value="ATC (APS)" {{ old('posisi') == 'ATC (APS)' ? 'selected' : '' }}>
-                                ATC
-                                (APS)</option>
-                            <option value="ATC (ACS)" {{ old('posisi') == 'ATC (ACS)' ? 'selected' : '' }}>
-                                ATC
-                                (ACS)</option>
-                            <option value="ACO" {{ old('posisi') == 'ACO' ? 'selected' : '' }}>ACO
-                            </option>
-                            <option value="AIS" {{ old('posisi') == 'AIS' ? 'selected' : '' }}>AIS
-                            </option>
-                            <option value="ATFM" {{ old('posisi') == 'ATFM' ? 'selected' : '' }}>
-                                ATFM
-                            </option>
-                            <option value="TAPOR" {{ old('posisi') == 'TAPOR' ? 'selected' : '' }}>
-                                TAPOR
-                            </option>
-                            <option value="ATSSystem" {{ old('posisi') == 'ATSSystem' ? 'selected' : '' }}>ATS
-                                System
-                            </option>
-                            <option value="STAFF" {{ old('posisi') == 'STAFF' ? 'selected' : '' }}>
-                                STAFF
-                            </option>
-                        </select>
+                        <input type="text" name="posisi" id="posisi"
+                            class="w-full px-2 py-1 mt-1 border-2 border-slate-400 rounded-md"
+                            placeholder="Ketik Disini..." value="{{ old('posisi') }}"
+                            onkeyup="searchPosisiSuggestionDebounce()">
+                        <div class="w-full absolute z-20 hidden flex-col items-start border p-1 gap-1 bg-white max-h-[200px] overflow-y-auto"
+                            id="posisi-suggestion">
+                        </div>
                     </aside>
                     <aside>
                         <label class="font-semibold" for="level_jabatan">Level Jabatan</label><br />
@@ -103,7 +80,8 @@
                         class="w-full px-2 py-1 mt-1 border-2 border-slate-400 rounded-md"
                         placeholder="Ketik Disini ..." value="{{ old('kontak') }}" />
                 </div>
-                <label class="font-semibold self-end" for="pensiun"><input type="checkbox" name="pensiun" id="pensiun">
+                <label class="font-semibold self-end" for="pensiun"><input type="checkbox" name="pensiun"
+                        id="pensiun">
                     Persiapan pensiun?</label>
                 <div class="w-full">
                     <label class="font-semibold" for="kompetensi">Kompetensi</label><br />
@@ -161,6 +139,53 @@
             });
             kompetensiCount++;
         });
+    </script>
+    <script>
+        function searchPosisi() {
+            const posisi = document.getElementById('posisi').value;
+            if (posisi.length < 2) {
+                return;
+            }
+            fetch('/api/rotasi/posisi?search=' + posisi)
+                .then(response => response.json())
+                .then(data => {
+                    const posisiSuggestion = document.getElementById('posisi-suggestion');
+                    posisiSuggestion.innerHTML = '';
+                    posisiSuggestion.classList.remove('hidden');
+                    data.forEach(posisi => {
+                        const button = document.createElement('button');
+                        button.classList.add('border', 'hover:border-2', 'w-full', 'text-start', 'p-1');
+                        button.innerText = posisi["jabatan"];
+                        button.type = "button";
+                        button.addEventListener('click', function() {
+                            document.getElementById('posisi').value = posisi["jabatan"];
+                            document.getElementById('posisi-suggestion').classList.add(
+                                'hidden');
+                            document.getElementById('posisi-suggestion').classList.remove(
+                                'flex');
+                        });
+                        posisiSuggestion.appendChild(button);
+                    });
+                });
+        }
+
+        const body = document.querySelector('body');
+        body.addEventListener('click', function(e) {
+            if (!e.target.closest('#posisi-suggestion') && !e.target.closest('#posisi')) {
+                document.getElementById('posisi-suggestion').classList.add('hidden');
+            }
+        });
+
+        function debounce(func, timeout = 300) {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    func.apply(this, args);
+                }, timeout);
+            };
+        }
+        const searchPosisiSuggestionDebounce = debounce(searchPosisi, 500);
     </script>
     <script src="/script/chatbot.js"></script>
 </body>

@@ -87,6 +87,15 @@ class CabangController extends Controller
             'jumlah_personel_ats_system' => 'required|numeric',
             'formasi_ats_system' => 'required|numeric',
             // 'frms_ats_system' => 'required|numeric',
+            'jumlah_personel_cns' => 'required|numeric',
+            'formasi_cns' => 'required|numeric',
+            // 'frms_cns' => 'required|numeric',
+            'jumlah_personel_ess' => 'required|numeric',
+            'formasi_ess' => 'required|numeric',
+            // 'frms_ess' => 'required|numeric',
+            'jumlah_personel_staffumum' => 'required|numeric',
+            'formasi_staffumum' => 'required|numeric',
+            // 'frms_staffumum' => 'required|numeric',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         DB::beginTransaction();
@@ -121,6 +130,18 @@ class CabangController extends Controller
         $cabang->jumlah_personel_ats_system = $request->jumlah_personel_ats_system;
         $cabang->formasi_ats_system = $request->formasi_ats_system;
         // $cabang->frms_ats_system = $request->frms_ats_system;
+
+        $cabang->jumlah_personel_cns = $request->jumlah_personel_cns;
+        $cabang->formasi_cns = $request->formasi_cns;
+        // $cabang->frms_cns = $request->frms_cns;
+
+        $cabang->jumlah_personel_ess = $request->jumlah_personel_ess;
+        $cabang->formasi_ess = $request->formasi_ess;
+        // $cabang->frms_ess = $request->frms_ess;
+
+        $cabang->jumlah_personel_staffumum = $request->jumlah_personel_staffumum;
+        $cabang->formasi_staffumum = $request->formasi_staffumum;
+        // $cabang->frms_staffumum = $request->frms_staffumum;
 
         if ($request->has('induk')) {
             $request->validate([
@@ -173,6 +194,12 @@ class CabangController extends Controller
             'formasi_tapor' => 'required|numeric',
             'jumlah_personel_ats_system' => 'required|numeric',
             'formasi_ats_system' => 'required|numeric',
+            'jumlah_personel_cns' => 'required|numeric',
+            'formasi_cns' => 'required|numeric',
+            'jumlah_personel_ess' => 'required|numeric',
+            'formasi_ess' => 'required|numeric',
+            'jumlah_personel_staffumum' => 'required|numeric',
+            'formasi_staffumum' => 'required|numeric',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         DB::beginTransaction();
@@ -207,6 +234,18 @@ class CabangController extends Controller
         $cabang->jumlah_personel_ats_system = $request->jumlah_personel_ats_system;
         $cabang->formasi_ats_system = $request->formasi_ats_system;
         // $cabang->frms_ats_system = $request->frms_ats_system;
+
+        $cabang->jumlah_personel_cns = $request->jumlah_personel_cns;
+        $cabang->formasi_cns = $request->formasi_cns;
+        // $cabang->frms_cns = $request->frms_cns;
+
+        $cabang->jumlah_personel_ess = $request->jumlah_personel_ess;
+        $cabang->formasi_ess = $request->formasi_ess;
+        // $cabang->frms_ess = $request->frms_ess;
+
+        $cabang->jumlah_personel_staffumum = $request->jumlah_personel_staffumum;
+        $cabang->formasi_staffumum = $request->formasi_staffumum;
+        // $cabang->frms_staffumum = $request->frms_staffumum;
 
         if ($request->has('induk')) {
             $request->validate([

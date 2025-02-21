@@ -72,6 +72,7 @@
                 </div>
             </section>
             <section id="section-3" class="sections hidden flex-col gap-1 p-2 rounded-md">
+                <h1 class="font-semibold">Operasi</h1>
                 <label for="jumlah_personel" class="font-semibold">Jumlah Eksisting ATC</label>
                 <input type="number" name="jumlah_personel" id="jumlah_personel" placeholder="Jumlah Eksisting ..."
                     class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
@@ -82,8 +83,60 @@
                     value="{{ old('formasi') }}">
                 <label for="frms" class="font-semibold">FRMS ATC</label>
                 <input type="number" name="frms" id="frms" placeholder="FRMS ..."
-                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md mb-4"
                     value="{{ old('frms') }}">
+
+                <label for="jumlah_personel_aco" class="font-semibold">Jumlah Eksisting ACO</label>
+                <input type="number" name="jumlah_personel_aco" id="jumlah_personel_aco"
+                    placeholder="Jumlah Eksisting ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
+                    value="{{ old('jumlah_personel_aco') }}">
+                <label for="formasi_aco" class="font-semibold">Jumlah Optimal ACO</label>
+                <input type="number" name="formasi_aco" id="formasi_aco" placeholder="Jumlah Optimal ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md mb-4"
+                    value="{{ old('formasi_aco') }}">
+
+                <label for="jumlah_personel_ais" class="font-semibold">Jumlah Eksisting AIS</label>
+                <input type="number" name="jumlah_personel_ais" id="jumlah_personel_ais"
+                    placeholder="Jumlah Eksisting ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
+                    value="{{ old('jumlah_personel_ais') }}">
+                <label for="formasi_ais" class="font-semibold">Jumlah Optimal AIS</label>
+                <input type="number" name="formasi_ais" id="formasi_ais" placeholder="Jumlah Optimal ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md mb-4"
+                    value="{{ old('formasi_ais') }}">
+
+                <label for="jumlah_personel_atfm" class="font-semibold">Jumlah Eksisting ATFM</label>
+                <input type="number" name="jumlah_personel_atfm" id="jumlah_personel_atfm"
+                    placeholder="Jumlah Eksisting ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
+                    value="{{ old('jumlah_personel_atfm') }}">
+                <label for="formasi_atfm" class="font-semibold">Jumlah Optimal ATFM</label>
+                <input type="number" name="formasi_atfm" id="formasi_atfm" placeholder="Jumlah Optimal ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md mb-4"
+                    value="{{ old('formasi_atfm') }}">
+
+                <label for="jumlah_personel_tapor" class="font-semibold">Jumlah Eksisting TAPOR</label>
+                <input type="number" name="jumlah_personel_tapor" id="jumlah_personel_tapor"
+                    placeholder="Jumlah Eksisting ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
+                    value="{{ old('jumlah_personel_tapor') }}">
+                <label for="formasi_tapor" class="font-semibold">Jumlah Optimal TAPOR</label>
+                <input type="number" name="formasi_tapor" id="formasi_tapor" placeholder="Jumlah Optimal ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md mb-4"
+                    value="{{ old('formasi_tapor') }}">
+
+                <label for="jumlah_personel_ats_system" class="font-semibold">Jumlah Eksisting ATS System</label>
+                <input type="number" name="jumlah_personel_ats_system" id="jumlah_personel_ats_system"
+                    placeholder="Jumlah Eksisting ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
+                    value="{{ old('jumlah_personel_ats_system') }}">
+                <label for="formasi_ats_system" class="font-semibold">Jumlah Optimal ATS System</label>
+                <input type="number" name="formasi_ats_system" id="formasi_ats_system"
+                    placeholder="Jumlah Optimal ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md mb-4"
+                    value="{{ old('formasi_ats_system') }}">
+
                 <div class="mt-3 flex justify-end gap-4 w-full">
                     <button type="button"
                         class="bg-white border-2 border-[#003285] opacity-80 hover:opacity-100 duration-200 text-gray-950 px-4 py-2 rounded-lg font-semibold"
@@ -98,15 +151,37 @@
                 </div>
             </section>
             <section id="section-4" class="sections hidden flex-col gap-1 p-2 rounded-md">
-                <label for="jumlah_personel_aco" class="font-semibold">Jumlah Eksisting ACO</label>
-                <input type="number" name="jumlah_personel_aco" id="jumlah_personel_aco"
+                <h1 class="font-semibold">Teknik</h1>
+                <label for="jumlah_personel" class="font-semibold">Jumlah Eksisting CNS</label>
+                <input type="number" name="jumlah_personel_cns" id="jumlah_personel_cns"
                     placeholder="Jumlah Eksisting ..."
                     class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('jumlah_personel_aco') }}">
-                <label for="formasi_aco" class="font-semibold">Jumlah Optimal ACO</label>
-                <input type="number" name="formasi_aco" id="formasi_aco" placeholder="Jumlah Optimal ..."
+                    value="{{ old('jumlah_personel_cns') }}">
+                <label for="formasi" class="font-semibold">Jumlah Optimal CNS</label>
+                <input type="number" name="formasi_cns" id="formasi_cns" placeholder="Jumlah Optimal ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md mb-4"
+                    value="{{ old('formasi_cns') }}">
+
+                <label for="jumlah_personel" class="font-semibold">Jumlah Eksisting ESS</label>
+                <input type="number" name="jumlah_personel_ess" id="jumlah_personel_ess"
+                    placeholder="Jumlah Eksisting ..."
                     class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('formasi_aco') }}">
+                    value="{{ old('jumlah_personel_ess') }}">
+                <label for="formasi" class="font-semibold">Jumlah Optimal ESS</label>
+                <input type="number" name="formasi_ess" id="formasi_ess" placeholder="Jumlah Optimal ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md mb-4"
+                    value="{{ old('formasi_ess') }}">
+
+                <h1 class="font-semibold">Umum</h1>
+                <label for="jumlah_personel" class="font-semibold">Jumlah Eksisting Staff</label>
+                <input type="number" name="jumlah_personel_staffumum" id="jumlah_personel_staffumum" placeholder="Jumlah Eksisting ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
+                    value="{{ old('jumlah_personel_staffumum') }}">
+                <label for="formasi" class="font-semibold">Jumlah Optimal Staff</label>
+                <input type="number" name="formasi_staffumum" id="formasi_staffumum" placeholder="Jumlah Optimal ..."
+                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md mb-4"
+                    value="{{ old('formasi_staffumum') }}">
+
                 <div class="mt-3 flex justify-end gap-4 w-full">
                     <button type="button"
                         class="bg-white border-2 border-[#003285] opacity-80 hover:opacity-100 duration-200 text-gray-950 px-4 py-2 rounded-lg font-semibold"
@@ -120,100 +195,7 @@
                     </button>
                 </div>
             </section>
-            <section id="section-5" class="sections hidden flex-col gap-1 p-2 rounded-md">
-                <label for="jumlah_personel_ais" class="font-semibold">Jumlah Eksisting AIS</label>
-                <input type="number" name="jumlah_personel_ais" id="jumlah_personel_ais"
-                    placeholder="Jumlah Eksisting ..."
-                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('jumlah_personel_ais') }}">
-                <label for="formasi_ais" class="font-semibold">Jumlah Optimal AIS</label>
-                <input type="number" name="formasi_ais" id="formasi_ais" placeholder="Jumlah Optimal ..."
-                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('formasi_ais') }}">
-                <div class="mt-3 flex justify-end gap-4 w-full">
-                    <button type="button"
-                        class="bg-white border-2 border-[#003285] opacity-80 hover:opacity-100 duration-200 text-gray-950 px-4 py-2 rounded-lg font-semibold"
-                        onclick="changeSection(4)">
-                        Kembali
-                    </button>
-                    <button type="button"
-                        class="bg-[#003285] opacity-80 hover:opacity-100 duration-200 text-white px-4 py-2 rounded-lg font-semibold"
-                        onclick="changeSection(6)">
-                        Selanjutnya
-                    </button>
-                </div>
-            </section>
-            <section id="section-6" class="sections hidden flex-col gap-1 p-2 rounded-md">
-                <label for="jumlah_personel_atfm" class="font-semibold">Jumlah Eksisting ATFM</label>
-                <input type="number" name="jumlah_personel_atfm" id="jumlah_personel_atfm"
-                    placeholder="Jumlah Eksisting ..."
-                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('jumlah_personel_atfm') }}">
-                <label for="formasi_atfm" class="font-semibold">Jumlah Optimal ATFM</label>
-                <input type="number" name="formasi_atfm" id="formasi_atfm" placeholder="Jumlah Optimal ..."
-                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('formasi_atfm') }}">
-                <div class="mt-3 flex justify-end gap-4 w-full">
-                    <button type="button"
-                        class="bg-white border-2 border-[#003285] opacity-80 hover:opacity-100 duration-200 text-gray-950 px-4 py-2 rounded-lg font-semibold"
-                        onclick="changeSection(5)">
-                        Kembali
-                    </button>
-                    <button type="button"
-                        class="bg-[#003285] opacity-80 hover:opacity-100 duration-200 text-white px-4 py-2 rounded-lg font-semibold"
-                        onclick="changeSection(7)">
-                        Selanjutnya
-                    </button>
-                </div>
-            </section>
-            <section id="section-7" class="sections hidden flex-col gap-1 p-2 rounded-md">
-                <label for="jumlah_personel_tapor" class="font-semibold">Jumlah Eksisting TAPOR</label>
-                <input type="number" name="jumlah_personel_tapor" id="jumlah_personel_tapor"
-                    placeholder="Jumlah Eksisting ..."
-                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('jumlah_personel_tapor') }}">
-                <label for="formasi_tapor" class="font-semibold">Jumlah Optimal TAPOR</label>
-                <input type="number" name="formasi_tapor" id="formasi_tapor" placeholder="Jumlah Optimal ..."
-                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('formasi_tapor') }}">
-                <div class="mt-3 flex justify-end gap-4 w-full">
-                    <button type="button"
-                        class="bg-white border-2 border-[#003285] opacity-80 hover:opacity-100 duration-200 text-gray-950 px-4 py-2 rounded-lg font-semibold"
-                        onclick="changeSection(6)">
-                        Kembali
-                    </button>
-                    <button type="button"
-                        class="bg-[#003285] opacity-80 hover:opacity-100 duration-200 text-white px-4 py-2 rounded-lg font-semibold"
-                        onclick="changeSection(8)">
-                        Selanjutnya
-                    </button>
-                </div>
-            </section>
-            <section id="section-8" class="sections hidden flex-col gap-1 p-2 rounded-md">
-                <label for="jumlah_personel_ats_system" class="font-semibold">Jumlah Eksisting ATS System</label>
-                <input type="number" name="jumlah_personel_ats_system" id="jumlah_personel_ats_system"
-                    placeholder="Jumlah Eksisting ..."
-                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('jumlah_personel_ats_system') }}">
-                <label for="formasi_ats_system" class="font-semibold">Jumlah Optimal ATS System</label>
-                <input type="number" name="formasi_ats_system" id="formasi_ats_system"
-                    placeholder="Jumlah Optimal ..."
-                    class="resize-none w-full p-2 mt-1 border-2 border-slate-400 rounded-md"
-                    value="{{ old('formasi_ats_system') }}">
-                <div class="mt-3 flex justify-end gap-4 w-full">
-                    <button type="button"
-                        class="bg-white border-2 border-[#003285] opacity-80 hover:opacity-100 duration-200 text-gray-950 px-4 py-2 rounded-lg font-semibold"
-                        onclick="changeSection(7)">
-                        Kembali
-                    </button>
-                    <button type="button"
-                        class="bg-[#003285] opacity-80 hover:opacity-100 duration-200 text-white px-4 py-2 rounded-lg font-semibold"
-                        onclick="changeSection(9)">
-                        Selanjutnya
-                    </button>
-                </div>
-            </section>
-            <section id="section-9" class="sections hidden flex-col items-center gap-1 p-2 rounded-md">
+            <section id="section-5" class="sections hidden flex-col items-center gap-1 p-2 rounded-md">
                 <label class="select-none">
                     <input type="checkbox" name="induk" id="induk" {{ old('induk') ? 'checked' : '' }}>
                     Cabang Induk ?
@@ -238,7 +220,7 @@
                 <div class="mt-3 flex justify-end gap-4 w-full">
                     <button type="button"
                         class="bg-white border-2 border-[#003285] opacity-80 hover:opacity-100 duration-200 text-gray-950 px-4 py-2 rounded-lg font-semibold"
-                        onclick="changeSection(8)">
+                        onclick="changeSection(4)">
                         Kembali
                     </button>
                     <button type="submit"

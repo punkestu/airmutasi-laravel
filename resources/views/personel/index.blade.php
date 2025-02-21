@@ -14,7 +14,7 @@
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
-            <form method="POST" action="/personel/import" enctype="multipart/form-data"
+            <form method="POST" action="/personel/import?type={{ $type }}" enctype="multipart/form-data"
                 class="relative bg-white rounded-lg shadow ">
                 @csrf
                 <!-- Modal header -->
@@ -70,19 +70,23 @@
                 </div>
                 <!-- Modal body -->
                 <div id="body" class="p-4 md:p-5 space-y-4">
-                    
+
                 </div>
             </div>
         </div>
     </div>
     <main class="min-h-screen">
-        <div class="text-xl font-semibold text-gray-800 px-4 py-2 bg-gray-100 flex gap-4">
-            <a href="/personel" class="underline">Personel</a>
-            <a href="/personel/konsep">Konsep</a>
-            <a href="/personel/task">Task</a>
+        <div class="text-xl font-semibold text-gray-800 px-4 py-2 bg-gray-100">
+            <h1 class="mb-2">Personel {{ $typeDisp }}</h1>
+            <div class="flex gap-4">
+                <a href="/personel?type={{ $type }}" class="underline">Personel</a>
+                <a href="/personel/konsep?type={{ $type }}">Konsep</a>
+                <a href="/personel/task?type={{ $type }}z">Task</a>
+            </div>
         </div>
         <div class="flex justify-between items-center px-4 py-2 bg-gray-100">
             <form action="" class="gap-2 flex">
+                <input type="hidden" name="type" value="{{ $type }}">
                 <input type="search" name="nik" id="nik-search"
                     class="min-w-40 px-2 py-1 border-2 border-slate-400 rounded-md" placeholder="NIK"
                     value="{{ $search['nik'] }}">
@@ -108,7 +112,7 @@
             <div class="flex items center gap-2">
                 <button
                     class="flex items-center justify-center px-4 py-2 text-white text-sm bg-blue-500 rounded-md hover:bg-blue-600"
-                    onclick="window.location.href='/personel/add'">
+                    onclick="window.location.href='/personel/add?type={{ $type }}'">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -321,7 +325,8 @@
                             </td>
                             <td class="px-6 py-4">
                                 @if (count($personel->pengajuan_pindah) > 0)
-                                    <button data-modal-target="detail-pindah-modal" data-modal-toggle="detail-pindah-modal"
+                                    <button data-modal-target="detail-pindah-modal"
+                                        data-modal-toggle="detail-pindah-modal"
                                         onclick='setPindahDetail(@json($personel->pengajuan_pindah))'>✅</button>
                                 @else
                                     -

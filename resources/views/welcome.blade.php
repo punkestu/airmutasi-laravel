@@ -23,7 +23,7 @@
             </div>
         </div>
     @endif
-    <main class="flex flex-col gap-4 p-8">
+    <main class="flex flex-col gap-4 px-8 py-4">
         <section class="flex flex-col-reverse md:flex-row items-stretch gap-4">
             <aside class="md:w-3/5 flex flex-col justify-between">
                 <p class="text-4xl 2xl:text-6xl font-black text-[#003285]">
@@ -36,14 +36,25 @@
                     Airmutasi membantu AirNav untuk mengelola sumber daya manusia secara lebih efektif, memastikan bahwa
                     setiap proses rotasi, demosi, dan promosi dilakukan dengan cara yang adil dan efisien.
                 </p>
-                <div class="grid md:grid-cols-2 gap-4 mt-4">
-                    <a href="/cabang/struktur" class="bg-[#003285] text-white p-4 rounded-md">
+                <div class="grid md:grid-cols-2 md:grid-rows-6 gap-4 mt-4">
+                    <a href="/cabang/struktur" class="row-span-3 bg-[#003285] text-white p-4 rounded-md flex items-center justify-center flex-col">
                         <p class="font-semibold text-2xl text-center">{{ $cabangs->count() }}+</p>
                         <p class="opacity-60 text-center">STRUKTUR KANTOR CABANG</p>
                     </a>
-                    <a href="/personel" class="bg-[#003285] text-white p-4 rounded-md">
-                        <p class="font-semibold text-2xl text-center">{{ $personel }}+</p>
+                    <a href="/personel" class="row-span-2 bg-[#003285] text-white p-4 rounded-md flex items-center justify-center flex-col">
+                        <p class="font-semibold text-2xl text-center">{{ $personelOperasi }}+</p>
                         <p class="opacity-60 text-center">SDM OPERASI</p>
+                    </a>
+                    <a href="/personel?type=teknik" class="row-span-2 bg-[#003285] text-white p-4 rounded-md flex items-center justify-center flex-col">
+                        <p class="font-semibold text-2xl text-center">{{ $personelTeknik }}+</p>
+                        <p class="opacity-60 text-center">SDM TEKNIK</p>
+                    </a>
+                    <a href="#" class="row-span-3 bg-[#003285] text-white p-4 rounded-md flex items-center justify-center flex-col">
+                        <p class="opacity-60 text-center">CAREER PATH</p>
+                    </a>
+                    <a href="/personel?type=umum" class="row-span-2 bg-[#003285] text-white p-4 rounded-md flex items-center justify-center flex-col">
+                        <p class="font-semibold text-2xl text-center">{{ $personelUmum }}+</p>
+                        <p class="opacity-60 text-center">SDM UMUM</p>
                     </a>
                 </div>
             </aside>
@@ -56,14 +67,14 @@
         </section>
         <div class="grid md:grid-cols-3 gap-4">
             <a href="/rotasi/cabang"
-                class="bg-[#003285] text-white font-semibold text-lg 2xl:text-xl flex flex-col justify-center items-center p-8 rounded-md 2xl:rounded-2xl opacity-90 hover:opacity-100 duration-300"><img
-                    src="/images/icons/rotasi1.svg" alt="rotasi" class="w-48" />Rotasi</a>
+                class="bg-[#003285] text-white font-semibold 2xl:text-xl flex flex-col justify-center items-center p-4 rounded-md 2xl:rounded-2xl opacity-90 hover:opacity-100 duration-300"><img
+                    src="/images/icons/rotasi1.svg" alt="rotasi" class="w-28" />Rotasi</a>
             <a href="/promosi"
-                class="bg-[#003285] text-white font-semibold text-lg 2xl:text-xl flex flex-col justify-center items-center p-8 rounded-md 2xl:rounded-2xl opacity-90 hover:opacity-100 duration-300">
-                <img src="/images/icons/promosi1.svg" alt="promosi" class="w-48" />Promosi</a>
+                class="bg-[#003285] text-white font-semibold 2xl:text-xl flex flex-col justify-center items-center p-4 rounded-md 2xl:rounded-2xl opacity-90 hover:opacity-100 duration-300">
+                <img src="/images/icons/promosi1.svg" alt="promosi" class="w-28" />Promosi</a>
             <a href="/demosi"
-                class="bg-[#003285] text-white font-semibold text-lg 2xl:text-xl flex flex-col justify-center items-center p-8 rounded-md 2xl:rounded-2xl opacity-90 hover:opacity-100 duration-300">
-                <img src="/images/icons/demosi1.svg" alt="demosi" class="w-48" />Demosi</a>
+                class="bg-[#003285] text-white font-semibold 2xl:text-xl flex flex-col justify-center items-center p-4 rounded-md 2xl:rounded-2xl opacity-90 hover:opacity-100 duration-300">
+                <img src="/images/icons/demosi1.svg" alt="demosi" class="w-28" />Demosi</a>
         </div>
     </main>
     @include('components.footer')

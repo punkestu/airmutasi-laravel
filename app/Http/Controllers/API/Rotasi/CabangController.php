@@ -6,9 +6,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cabang;
 use App\Models\CabangNode;
+use App\Models\PersonelJabatanCategory;
 
 class CabangController extends Controller
 {
+    public function searchPosisi(Request $request)
+    {
+        $search = $request->search;
+
+        $positions = PersonelJabatanCategory::where("jabatan", "LIKE", "%$search%")->get();
+        return response()->json($positions);
+    }
+
     public function search(Request $request)
     {
         $search = $request->search;

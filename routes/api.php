@@ -30,6 +30,7 @@ Route::group(['prefix' => 'rotasi'], function () {
     Route::get('/cabang-search', [RotasiCabangController::class, 'search']);
     Route::get('/cabang-kelas/{kelas}', [RotasiCabangController::class, 'inKelas']);
     Route::get('/cabang-same-kelas/{id}', [RotasiCabangController::class, 'inSameKelas']);
+    Route::get('/posisi', [RotasiCabangController::class, 'searchPosisi']);
 });
 
 Route::group(['prefix' => 'pengajuan'], function () {

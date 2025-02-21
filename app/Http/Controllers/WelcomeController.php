@@ -11,13 +11,16 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $personelCount = Personel::count();
+        $personelCount = Personel::groupBy('type')->selectRaw('count(*) as total, type')->pluck('total', 'type');
+        $personelOperasi = ($personelCount['Operasi'] ?? 0) + ($personelCount[""] ?? 0);
+        $personelTeknik = $personelCount['Teknik'] ?? 0;
+        $personelUmum = $personelCount['Umum'] ?? 0;
         $cabangs = Cabang::select('thumbnail_url')->get();
         if (session()->has("justlogin")) {
             $welcomePopup = WelcomePopup::latest('created_at')->first();
-            return view('welcome', ["personel" => $personelCount, "cabangs" => $cabangs, "welcomepopup" => $welcomePopup]);
+            return view('welcome', ["personelOperasi" => $personelOperasi, "personelTeknik" => $personelTeknik, "personelUmum" => $personelUmum, "cabangs" => $cabangs, "welcomepopup" => $welcomePopup]);
         }
-        return view('welcome', ["personel" => $personelCount, "cabangs" => $cabangs]);
+        return view('welcome', ["personelOperasi" => $personelOperasi, "personelTeknik" => $personelTeknik, "personelUmum" => $personelUmum, "cabangs" => $cabangs]);
     }
     public function updateWelcomePopup(Request $request)
     {

@@ -56,26 +56,16 @@
         </section>
         <section class="p-8">
             <div class="bg-white rounded-lg border-2 border-[#293676]">
-                <div class="grid grid-cols-12 gap-4 items-center p-4 border-b-2 border-[#293676] text-[#293676]">
-                    <aside class="flex gap-4 col-span-12 overflow-x-auto">
+                <div class="overflow-x-auto p-4 border-b-2 border-[#293676] text-[#293676]">
+                    <div class="flex flex-nowrap gap-4">
                         @foreach ($categories as $category)
-                            <a class="flex-grow {{ $tab == $category ? 'font-semibold underline' : '' }}"
-                                href="/personel/cabang/{{ $cabang->id }}?tab={{ $category }}">Personel {{ $category }}</a>
+                            <a class="text-nowrap {{ $tab == $category ? 'font-semibold underline' : '' }}"
+                                href="/personel/cabang/{{ $cabang->id }}?tab={{ $category }}">Personel
+                                {{ $category }}</a>
                         @endforeach
-                        <a class="flex-grow {{ $tab == 'lainnya' ? 'font-semibold underline' : '' }}"
+                        <a class="{{ $tab == 'lainnya' ? 'font-semibold underline' : '' }}"
                             href="/personel/cabang/{{ $cabang->id }}?tab=lainnya">Lainnya</a>
-                    </aside>
-                    {{-- @can('admin')
-                        <div class="flex col-span-6 md:col-span-3 gap-2">
-                            <a href="/personel/add"
-                                class="text-center bg-[#7186F3] hover:bg-[#435EEF] duration-200 text-white px-4 py-2 rounded-lg font-semibold flex-grow">Tambah
-                                +</a>
-                            <button popovertarget="export-personel-popover"
-                                class="text-center bg-[#7186F3] hover:bg-[#435EEF] duration-200 text-white px-4 py-2 rounded-lg font-semibold flex-grow">
-                                Export
-                            </button>
-                        </div>
-                    @endcan --}}
+                    </div>
                 </div>
                 <div class="relative overflow-x-auto max-h-[70vh] overflow-y-auto block">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

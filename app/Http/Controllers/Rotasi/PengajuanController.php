@@ -51,8 +51,8 @@ class PengajuanController extends Controller
         $request->validate([
             'lokasi_awal_id' => 'required|numeric|exists:cabangs,id',
             'lokasi_tujuan_id' => 'required|numeric|exists:cabangs,id',
-            'posisi_sekarang' => ['required', Rule::in($this->posisi)],
-            'posisi_tujuan' => ['required', Rule::in($this->posisi)],
+            'posisi_sekarang' => 'required',
+            'posisi_tujuan' => 'required',
             'kompetensi' => 'required|array',
             'kompetensi.*.nama' => 'required',
             'tujuan_rotasi' => 'required',

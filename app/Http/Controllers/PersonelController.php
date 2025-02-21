@@ -14,6 +14,7 @@ class PersonelController extends Controller
 {
     public function index()
     {
+        $type = request()->get('type');
         $page = request()->get('page', 0);
         $limit = 100;
         $nik = request()->get('nik');
@@ -21,10 +22,17 @@ class PersonelController extends Controller
         $cabang_id = request()->get('cabang_id');
         $cabang = request()->get('cabang');
         if ($nik == "" && $name == "" && $cabang == "") {
-            $personels = Personel::with(['cabang', 'lokasiCabang', 'lokasiInduk', 'pengajuan_pindah' => [
-                'lokasiAwal',
-                'lokasiTujuan',
-            ]])->limit($limit)->offset($page * $limit)->get();
+            if (!$type) {
+                $personels = Personel::with(['cabang', 'lokasiCabang', 'lokasiInduk', 'pengajuan_pindah' => [
+                    'lokasiAwal',
+                    'lokasiTujuan',
+                ]])->whereNull("type")->orWhere("type", "Operasi")->limit($limit)->offset($page * $limit)->get();
+            } else {
+                $personels = Personel::with(['cabang', 'lokasiCabang', 'lokasiInduk', 'pengajuan_pindah' => [
+                    'lokasiAwal',
+                    'lokasiTujuan',
+                ]])->where("type", $type == "teknik" ? "Teknik" : "Umum")->limit($limit)->offset($page * $limit)->get();
+            }
             $cabangs = Cabang::all();
             if (!$cabangs) abort(404);
             return view('personel.index', [
@@ -37,12 +45,19 @@ class PersonelController extends Controller
                     'cabang_id' => $cabang_id,
                     'cabang' => $cabang,
                 ],
+                'type' => $type,
+                'typeDisp' => $type == "teknik" ? "Teknik" : ($type == "umum" ? "Umum" : "Operasi"),
             ]);
         }
         $personels = Personel::with(['cabang', 'lokasiCabang', 'lokasiInduk', 'pengajuan_pindah' => [
             'lokasiAwal',
             'lokasiTujuan',
         ]])->where('nik', 'like', $nik . '%')->where('name', 'like', '%' . $name . '%');
+        if (!$type) {
+            $personels = $personels->whereNull("type")->orWhere("type", "Operasi");
+        } else {
+            $personels = $personels->where("type", $type == "teknik" ? "Teknik" : "Umum");
+        }
         if ($cabang != "") {
             $personels = $personels->where('cabang_id', $cabang_id);
         }
@@ -65,6 +80,8 @@ class PersonelController extends Controller
             'cabangs' => $cabangs,
             'page' => $page ?? 0,
             'search' => $search,
+            'type' => $type,
+            'typeDisp' => $type == "teknik" ? "Teknik" : ($type == "umum" ? "Umum" : "Operasi"),
         ]);
     }
 
@@ -191,8 +208,10 @@ class PersonelController extends Controller
     public function inputView()
     {
         $cabangs = Cabang::all();
+        $type = request()->get('type');
         return view('personel.input', [
             'cabangs' => $cabangs,
+            'type' => $type,
         ]);
     }
 
@@ -201,6 +220,7 @@ class PersonelController extends Controller
         $request->validate([
             'sheet' => 'required|mimes:csv,txt',
         ]);
+        $type = $request->type;
         $file = $request->file('sheet');
         $cabangs = Cabang::pluck('id', 'nama')->toArray();
         $path = $file->getRealPath();
@@ -277,6 +297,8 @@ class PersonelController extends Controller
                 $dataPersonel["tmt_jabatan"] = $dataPersonel["tmt_jabatan"] ? date('Y-m-d', strtotime($dataPersonel["tmt_jabatan"])) : "2000-01-01";
                 $dataPersonel["tmt_level_jabatan"] = $dataPersonel["tmt_level_jabatan"] ? date('Y-m-d', strtotime($dataPersonel["tmt_level_jabatan"])) : "2000-01-01";
 
+                $dataPersonel["type"] = $type === "teknik" ? "Teknik" : ($type === "umum" ? "Umum" : "Operasi");
+
                 Personel::updateOrCreate(["nik" => $dataPersonel["nik"]], $dataPersonel);
             }
             DB::commit();
@@ -341,6 +363,8 @@ class PersonelController extends Controller
             'posisi',
             'pensiun'
         ]);
+        $type = $request->type;
+        $dataPersonel["type"] = $type === "teknik" ? "Teknik" : ($type === "umum" ? "Umum" : "Operasi");
         $dataPersonel["pensiun"] = $request->pensiun === 'on';
         DB::beginTransaction();
         $personel = Personel::create($dataPersonel);

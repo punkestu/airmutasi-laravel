@@ -114,7 +114,7 @@ function generatePieChart(title, series, labels = []) {
     };
 }
 
-function generateRadarChart(title, series) {
+function generateRadarChart(title, series, items = ["ATC", "ACO", "AIS", "ATFM", "TAPOR", "ATS System", "CNS", "ESS", "Staff Umum"]) {
     return {
         series,
         chart: {
@@ -129,10 +129,10 @@ function generateRadarChart(title, series) {
             },
         },
         xaxis: {
-            categories: ["ATC", "ACO", "AIS", "ATFM", "TAPOR", "ATS System"],
+            categories: items,
             labels: {
                 style: {
-                    colors: ["#fff", "#fff", "#fff", "#fff", "#fff", "#fff"],
+                    colors: items.map(() => "#fff"),
                 },
             },
         },
@@ -140,7 +140,7 @@ function generateRadarChart(title, series) {
             tickAmount: 3,
             labels: {
                 style: {
-                    colors: ["#ff0", "#ff0", "#ff0", "#ff0", "#ff0", "#ff0"],
+                    colors: items.map(() => "#ff0"),
                 },
             },
         },

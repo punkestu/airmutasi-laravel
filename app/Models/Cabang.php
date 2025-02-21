@@ -30,6 +30,15 @@ class Cabang extends Model
         'jumlah_personel_ats_system',
         'formasi_ats_system',
         'frms_ats_system',
+        'jumlah_personel_cns',
+        'formasi_cns',
+        'frms_cns',
+        'jumlah_personel_ess',
+        'formasi_ess',
+        'frms_ess',
+        'jumlah_personel_staffumum',
+        'formasi_staffumum',
+        'frms_staffumum',
     ];
 
     private $jabatanATC;
@@ -38,6 +47,9 @@ class Cabang extends Model
     private $jabatanATFM;
     private $jabatanTAPOR;
     private $jabatanATSSystem;
+    private $jabatanCNS;
+    private $jabatanESS;
+    private $jabatanStaffUmum;
 
     public function notifications()
     {
@@ -146,6 +158,49 @@ class Cabang extends Model
             ->whereIn('posisi', $this->jabatanATSSystem);
     }
 
+    public function personelPensiunCNS()
+    {
+        if ($this->jabatanCNS == null) {
+            $this->jabatanCNS = PersonelJabatanCategory::select('jabatan')->where('category', 'CNS')->get();
+            $this->jabatanCNS = $this->jabatanCNS->map(function ($item) {
+                return $item->jabatan;
+            });
+        }
+
+        return $this->hasMany(Personel::class)
+            ->where('pensiun', '=', 1)
+            ->whereIn('posisi', $this->jabatanCNS);
+    }
+
+    public function personelPensiunESS()
+    {
+        if ($this->jabatanESS == null) {
+            $this->jabatanESS = PersonelJabatanCategory::select('jabatan')->where('category', 'ESS')->get();
+            $this->jabatanESS = $this->jabatanESS->map(function ($item) {
+                return $item->jabatan;
+            });
+        }
+
+        return $this->hasMany(Personel::class)
+            ->where('pensiun', '=', 1)
+            ->whereIn('posisi', $this->jabatanESS);
+    }
+
+    public function personelPensiunStaffUmum()
+    {
+        if ($this->jabatanStaffUmum == null) {
+            $this->jabatanStaffUmum = PersonelJabatanCategory::select('jabatan')->where('category', 'StaffUmum')->get();
+            $this->jabatanStaffUmum = $this->jabatanStaffUmum->map(function ($item) {
+                return $item->jabatan;
+            });
+        }
+
+        return $this->hasMany(Personel::class)
+            ->where('pensiun', '=', 1)
+            ->whereIn('posisi', $this->jabatanStaffUmum);
+    }
+
+
     public function personelMagangATC()
     {
         if ($this->jabatanATC == null) {
@@ -228,6 +283,48 @@ class Cabang extends Model
         return $this->hasMany(Personel::class)
             ->where('magang', '=', 1)
             ->whereIn('posisi', $this->jabatanATSSystem);
+    }
+
+    public function personelMagangCNS()
+    {
+        if ($this->jabatanCNS == null) {
+            $this->jabatanCNS = PersonelJabatanCategory::select('jabatan')->where('category', 'CNS')->get();
+            $this->jabatanCNS = $this->jabatanCNS->map(function ($item) {
+                return $item->jabatan;
+            });
+        }
+
+        return $this->hasMany(Personel::class)
+            ->where('magang', '=', 1)
+            ->whereIn('posisi', $this->jabatanCNS);
+    }
+
+    public function personelMagangESS()
+    {
+        if ($this->jabatanESS == null) {
+            $this->jabatanESS = PersonelJabatanCategory::select('jabatan')->where('category', 'ESS')->get();
+            $this->jabatanESS = $this->jabatanESS->map(function ($item) {
+                return $item->jabatan;
+            });
+        }
+
+        return $this->hasMany(Personel::class)
+            ->where('magang', '=', 1)
+            ->whereIn('posisi', $this->jabatanESS);
+    }
+
+    public function personelMagangStaffUmum()
+    {
+        if ($this->jabatanStaffUmum == null) {
+            $this->jabatanStaffUmum = PersonelJabatanCategory::select('jabatan')->where('category', 'StaffUmum')->get();
+            $this->jabatanStaffUmum = $this->jabatanStaffUmum->map(function ($item) {
+                return $item->jabatan;
+            });
+        }
+
+        return $this->hasMany(Personel::class)
+            ->where('magang', '=', 1)
+            ->whereIn('posisi', $this->jabatanStaffUmum);
     }
 
     public function kelases()

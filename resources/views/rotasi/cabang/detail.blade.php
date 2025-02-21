@@ -41,7 +41,7 @@
             </aside>
             <aside class="flex-grow col-span-2 grid md:grid-cols-2 md:grid-rows-1 gap-4">
                 <div
-                    class="bg-[#003285] col-span-2 md:col-span-1 flex items-center justify-center rounded-lg p-4 min-h-[50vh]">
+                    class="bg-[#003285] col-span-2 md:col-span-1 flex flex-col items-center justify-center rounded-lg p-4 min-h-[50vh]">
                     <div id="stats-radar" class="w-full"></div>
                 </div>
                 <div
@@ -98,7 +98,7 @@
                         <p class="font-medium ms-4">Jumlah FRMS Minimal {{ $cabang->frms }} Orang</p>
                     </div>
                     <div class="col-span-2 sm:col-span-1 border-4 border-[#003285] rounded-lg p-2 grid">
-                        <h2 class="font-bold text-xl text-center col-span-12">Unit</h2>
+                        <h2 class="font-bold text-xl text-center col-span-12">Operasi</h2>
                         <hr class="border-[1px] my-1 col-span-12">
                         <table class="col-span-12">
                             <tr>
@@ -133,33 +133,42 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="col-span-2 border-4 border-[#003285] rounded-lg flex flex-col justify-center p-2">
-                        <h2 class="font-bold text-xl text-center">Prediksi Personel {{ date('Y') + 1 }}</h2>
+                    <div class="border-4 border-[#003285] rounded-lg flex flex-col p-2">
+                        <h2 class="font-bold text-xl text-center">Teknik</h2>
                         <hr class="border-[1px] my-1">
-                        <p class="font-medium ms-4 text-center">
-                            ATC
-                            {{ $cabang->jumlah_personel - count($cabang->personelPensiunATC) + count($cabang->personelMagangATC) }}
-                            Orang</p>
-                        <p class="font-medium ms-4 text-center">
-                            ACO
-                            {{ $cabang->jumlah_personel_aco - count($cabang->personelPensiunACO) + count($cabang->personelMagangACO) }}
-                            Orang</p>
-                        <p class="font-medium ms-4 text-center">
-                            AIS
-                            {{ $cabang->jumlah_personel_ais - count($cabang->personelPensiunAIS) + count($cabang->personelMagangAIS) }}
-                            Orang</p>
-                        <p class="font-medium ms-4 text-center">
-                            ATFM
-                            {{ $cabang->jumlah_personel_atfm - count($cabang->personelPensiunATFM) + count($cabang->personelMagangATFM) }}
-                            Orang</p>
-                        <p class="font-medium ms-4 text-center">
-                            TAPOR
-                            {{ $cabang->jumlah_personel_tapor - count($cabang->personelPensiunTAPOR) + count($cabang->personelMagangTAPOR) }}
-                            Orang</p>
-                        <p class="font-medium ms-4 text-center">
-                            ATS System
-                            {{ $cabang->jumlah_personel_ats_system - count($cabang->personelPensiunATSSystem) + count($cabang->personelMagangATSSystem) }}
-                            Orang</p>
+                        <table class="col-span-12">
+                            <tr>
+                                <th class="text-start">Posisi</th>
+                                <th class="text-start">Eksisting</th>
+                                <th class="text-start">Formasi</th>
+                            </tr>
+                            <tr>
+                                <td>CNS</td>
+                                <td>{{ $cabang->jumlah_personel_cns }}</td>
+                                <td>{{ $cabang->formasi_cns }}</td>
+                            </tr>
+                            <tr>
+                                <td>ESS</td>
+                                <td>{{ $cabang->jumlah_personel_ess }}</td>
+                                <td>{{ $cabang->formasi_ess }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="border-4 border-[#003285] rounded-lg flex flex-col p-2">
+                        <h2 class="font-bold text-xl text-center">Umum</h2>
+                        <hr class="border-[1px] my-1">
+                        <table class="col-span-12">
+                            <tr>
+                                <th class="text-start">Posisi</th>
+                                <th class="text-start">Eksisting</th>
+                                <th class="text-start">Formasi</th>
+                            </tr>
+                            <tr>
+                                <td>Staff</td>
+                                <td>{{ $cabang->jumlah_personel_staffumum }}</td>
+                                <td>{{ $cabang->formasi_staffumum }}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </aside>
@@ -202,6 +211,9 @@
                 {{ $cabang->frms_atfm }},
                 {{ $cabang->frms_tapor }},
                 {{ $cabang->frms_ats_system }},
+                {{ $cabang->frms_cns }},
+                {{ $cabang->frms_ess }},
+                {{ $cabang->frms_staffumum }},
             ],
         }, {
             name: 'Eksisting',
@@ -212,6 +224,9 @@
                 {{ $cabang->jumlah_personel_atfm }},
                 {{ $cabang->jumlah_personel_tapor }},
                 {{ $cabang->jumlah_personel_ats_system }},
+                {{ $cabang->jumlah_personel_cns }},
+                {{ $cabang->jumlah_personel_ess }},
+                {{ $cabang->jumlah_personel_staffumum }},
             ],
         }, {
             name: 'Optimal',
@@ -222,6 +237,9 @@
                 {{ $cabang->formasi_atfm }},
                 {{ $cabang->formasi_tapor }},
                 {{ $cabang->formasi_ats_system }},
+                {{ $cabang->formasi_cns }},
+                {{ $cabang->formasi_ess }},
+                {{ $cabang->formasi_staffumum }},
             ],
         }]);
 

@@ -60,7 +60,7 @@
                                 placeholder="Ketik Disini ..." value="{{ old('jabatan') }}" />
                         </aside>
                         <input type="hidden" name="tidak_pindah" id="tidak_pindah"
-                            value="{{ old('tidak_pindah') ?? 'tidak'}}">
+                            value="{{ old('tidak_pindah') ?? 'tidak' }}">
                     </div>
                     <div class="flex justify-end gap-4 w-full">
                         <button type="button"
@@ -101,20 +101,14 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div>
+                            <div class="relative">
                                 <label class="font-semibold" for="posisi_sekarang">Posisi Awal</label><br />
-                                <select name="posisi_sekarang" id="posisi_sekarang"
-                                    class="w-full px-2 py-1 mt-1 bg-white border-2 border-slate-400 rounded-md">
-                                    <option value disabled {{ !old('posisi_sekarang') ? 'selected' : '' }}>--- Pilih
-                                        Posisi
-                                        ---
-                                    </option>
-                                    @foreach (['ATC (TWR)', 'ATC (APS)', 'ATC (ACS)', 'ACO', 'AIS', 'ATFM', 'TAPOR', 'ATSSystem', 'STAFF'] as $posisi)
-                                        <option value="{{ $posisi }}"
-                                            {{ old('posisi_sekarang') == $posisi ? 'selected' : '' }}>
-                                            {{ $posisi }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="w-full px-2 py-1 mt-1 border-2 border-slate-400 rounded-md"
+                                    value="{{ old('posisi_sekarang') }}" name="posisi_sekarang" id="posisi_sekarang"
+                                    placeholder="Ketik Disini..." onkeyup="searchPosisiSekarangDebounce()">
+                                <div class="w-full absolute z-20 hidden flex-col items-start border p-1 gap-1 bg-white max-h-[200px] overflow-y-auto"
+                                    id="posisi_sekarang-suggestion">
+                                </div>
                             </div>
                         </aside>
                         <div class="self-center flex justify-center items-center">
@@ -140,20 +134,15 @@
                                     <option value>--- Pilih Lokasi Tujuan Alternatif 2 ---</option>
                                 </select>
                             </div>
-                            <div>
+                            <div class="relative">
                                 <label class="font-semibold" for="posisi_tujuan">Posisi Tujuan</label><br />
-                                <select name="posisi_tujuan" id="posisi_tujuan"
-                                    class="w-full px-2 py-1 mt-1 bg-white border-2 border-slate-400 rounded-md">
-                                    <option value disabled {{ !old('posisi_tujuan') ? 'selected' : '' }}>--- Pilih
-                                        Posisi
-                                        ---
-                                    </option>
-                                    @foreach (['ATC (TWR)', 'ATC (APS)', 'ATC (ACS)', 'ACO', 'AIS', 'ATFM', 'TAPOR', 'ATSSystem', 'STAFF'] as $posisi)
-                                        <option value="{{ $posisi }}"
-                                            {{ old('posisi_tujuan') == $posisi ? 'selected' : '' }}>
-                                            {{ $posisi }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text"
+                                    class="w-full px-2 py-1 mt-1 border-2 border-slate-400 rounded-md"
+                                    value="{{ old('posisi_tujuan') }}" name="posisi_tujuan" id="posisi_tujuan"
+                                    placeholder="Ketik Disini..." onkeyup="searchPosisiTujuanDebounce()">
+                                <div class="w-full absolute z-20 hidden flex-col items-start border p-1 gap-1 bg-white max-h-[200px] overflow-y-auto"
+                                    id="posisi_tujuan-suggestion">
+                                </div>
                             </div>
                         </aside>
                     </div>
@@ -558,11 +547,63 @@
                 });
         }
 
+        function searchPosisi(posisiSekarang = true) {
+            const posisi = document.getElementById(posisiSekarang ? 'posisi_sekarang' : 'posisi_tujuan').value;
+            if (posisi.length < 2) {
+                return;
+            }
+            fetch('/api/rotasi/posisi?search=' + posisi)
+                .then(response => response.json())
+                .then(data => {
+                    const posisiSekarangSuggestion = document.getElementById('posisi_sekarang-suggestion');
+                    const posisiTujuanSuggestion = document.getElementById('posisi_tujuan-suggestion');
+                    posisiSekarangSuggestion.innerHTML = '';
+                    posisiTujuanSuggestion.innerHTML = '';
+                    if (posisiSekarang) {
+                        posisiSekarangSuggestion.classList.remove('hidden');
+                    } else {
+                        posisiTujuanSuggestion.classList.remove('hidden');
+                    }
+                    data.forEach(posisi => {
+                        const button = document.createElement('button');
+                        button.classList.add('border', 'hover:border-2', 'w-full', 'text-start', 'p-1');
+                        button.innerText = posisi["jabatan"];
+                        button.type = "button";
+                        button.addEventListener('click', function() {
+                            if (posisiSekarang) {
+                                document.getElementById('posisi_sekarang').value = posisi["jabatan"];
+                                document.getElementById('posisi_sekarang-suggestion').classList.add(
+                                    'hidden');
+                                document.getElementById('posisi_sekarang-suggestion').classList.remove(
+                                    'flex');
+                            } else {
+                                document.getElementById('posisi_tujuan').value = posisi["jabatan"];
+                                document.getElementById('posisi_tujuan-suggestion').classList.add(
+                                    'hidden');
+                                document.getElementById('posisi_tujuan-suggestion').classList.remove(
+                                    "flex");
+                            }
+                        });
+                        if (posisiSekarang) {
+                            posisiSekarangSuggestion.appendChild(button);
+                        } else {
+                            posisiTujuanSuggestion.appendChild(button);
+                        }
+                    });
+                });
+        }
+
         const body = document.querySelector('body');
         body.addEventListener('click', function(e) {
             if (!e.target.closest('#nik-suggestion') && !e.target.closest('#nik')) {
                 document.getElementById('nik-suggestion').classList.add('hidden');
                 document.getElementById('nik-suggestion').classList.remove('flex');
+            }
+            if (!e.target.closest('#posisi_sekarang-suggestion') && !e.target.closest('#posisi_sekarang')) {
+                document.getElementById('posisi_sekarang-suggestion').classList.add('hidden');
+            }
+            if (!e.target.closest('#posisi_tujuan-suggestion') && !e.target.closest('#posisi_tujuan')) {
+                document.getElementById('posisi_tujuan-suggestion').classList.add('hidden');
             }
         });
 
@@ -576,6 +617,8 @@
             };
         }
         const searchNIKDebounce = debounce(searchNIK, 500);
+        const searchPosisiSekarangDebounce = debounce(() => searchPosisi(true), 500);
+        const searchPosisiTujuanDebounce = debounce(() => searchPosisi(false), 500);
 
         function tidakpindah() {
             document.getElementById('tidak_pindah').value = 'ya';
